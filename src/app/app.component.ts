@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterOutlet} from '@angular/router';
 import * as MiniZinc from 'minizinc';
 
 @Component({
@@ -13,33 +13,39 @@ import * as MiniZinc from 'minizinc';
 
 export class AppComponent {
   title = 'opti-appliquee';
+  model: MiniZinc.Model = new MiniZinc.Model();
+  modelFileContent: any;
+
   constructor() {
     MiniZinc.init({
-      // If omitted, searches for minizinc-worker.js next to the minizinc library script
       workerURL: 'http://localhost:4200/assets/minizinc-worker.js',
-      // If these are omitted, searches next to the worker script
       wasmURL: 'http://localhost:4200/assets/minizinc.wasm',
       dataURL: 'http://localhost:4200/assets/minizinc.data'
     }).then(() => {
       console.log('Ready');
     });
-    // ('node_modules/minizinc/dist/minizinc-worker.js');
 
-    const model = new MiniZinc.Model();
-    model.addFile('computer.mzn', '');
-    const solve = model.solve({
-      options: {
-        solver: 'gecode',
-        // 'all-solutions': true,
-        'statistics': true
-      }
-    });
-    solve.on('solution', solution => console.log(solution.output.json)
-    );
-    solve.then((result: { status: any; }) => {
-      console.log(result.status);
+    this.modelFileContent = "";
+    fetch("http://localhost:4200/assets/computer.mzn").then(res => res.text()).then(data => {
+      // console.log(data)
+      this.modelFileContent = data
     });
   }
 
-}
+  initModel() {
+    console.log(this.modelFileContent)
+    this.model.addFile('computer.mzn', this.modelFileContent);
+  }
 
+  solveModel() {
+    const solve = this.model.solve({
+      options: {
+        solver: 'gecode',
+        'all-solutions': true,
+      }
+    });
+    solve.then(result => {
+      console.log(JSON.stringify(result.solution));
+    });
+  }
+}

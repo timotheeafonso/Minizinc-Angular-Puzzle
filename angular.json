@@ -27,6 +27,11 @@
                 "glob": "**/*",
                 "input": "node_modules/minizinc/dist/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/minizinc/",
+                "output": "/assets/"
               }
             ],
             "styles": [

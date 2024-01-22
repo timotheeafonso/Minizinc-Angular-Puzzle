@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-// @ts-ignore
-import { Model } from 'https://cdn.jsdelivr.net/npm/minizinc/dist/minizinc.mjs';
-
-
-
+import * as MiniZinc from 'minizinc';
 
 @Component({
   selector: 'app-root',
@@ -18,19 +14,30 @@ import { Model } from 'https://cdn.jsdelivr.net/npm/minizinc/dist/minizinc.mjs';
 export class AppComponent {
   title = 'opti-appliquee';
   constructor() {
-    const model = new Model();
-    model.addFile('carreMLagique.mzn', 'var 1..4: x;');
+    MiniZinc.init({
+      // If omitted, searches for minizinc-worker.js next to the minizinc library script
+      workerURL: 'http://localhost:4200/assets/minizinc-worker.js',
+      // If these are omitted, searches next to the worker script
+      wasmURL: 'http://localhost:4200/assets/minizinc.wasm',
+      dataURL: 'http://localhost:4200/assets/minizinc.data'
+    }).then(() => {
+      console.log('Ready');
+    });
+    // ('node_modules/minizinc/dist/minizinc-worker.js');
+
+    const model = new MiniZinc.Model();
+    model.addFile('carreMLagique.mzn', '');
     const solve = model.solve({
       options: {
         solver: 'gecode',
-        'all-solutions': true
+        // 'all-solutions': true,
+        'statistics': true
       }
     });
-    solve.on('solution',  (solution: { output: { json: any; }; })  => {
-      console.log(solution.output.json);
-    });
+    solve.on('solution', solution => console.log(solution.output.json)
+    );
     solve.then((result: { status: any; }) => {
-      console.log(result.status);
+      console.log(result);
     });
   }
 

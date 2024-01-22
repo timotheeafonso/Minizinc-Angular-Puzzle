@@ -26,7 +26,7 @@ export class AppComponent {
     // ('node_modules/minizinc/dist/minizinc-worker.js');
 
     const model = new MiniZinc.Model();
-    model.addFile('carreMLagique.mzn', '');
+    model.addFile('computer.mzn', '');
     const solve = model.solve({
       options: {
         solver: 'gecode',
@@ -37,7 +37,7 @@ export class AppComponent {
     solve.on('solution', solution => console.log(solution.output.json)
     );
     solve.then((result: { status: any; }) => {
-      console.log(result);
+      console.log(result.status);
     });
   }
 

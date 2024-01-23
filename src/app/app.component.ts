@@ -12,7 +12,7 @@ import * as MiniZinc from 'minizinc';
 })
 
 export class AppComponent {
-  title = 'opti-appliquee';
+  title = 'Peuzeulz !';
   model: MiniZinc.Model = new MiniZinc.Model();
   modelFileContent: any;
 
@@ -25,16 +25,19 @@ export class AppComponent {
       console.log('Ready');
     });
 
-    this.modelFileContent = "";
-    fetch("http://localhost:4200/assets/computer.mzn").then(res => res.text()).then(data => {
-      // console.log(data)
-      this.modelFileContent = data
-    });
+    fetch("http://localhost:4200/assets/computer.mzn").then(
+      res => res.text()
+    ).then(
+      data => {
+        // console.log(data)
+        this.modelFileContent = data
+      }
+    );
   }
 
   initModel() {
-    console.log(this.modelFileContent)
-    this.model.addFile('computer.mzn', this.modelFileContent);
+    // console.log(this.modelFileContent)
+    this.model.addFile("computer.mzn", this.modelFileContent);
   }
 
   solveModel() {

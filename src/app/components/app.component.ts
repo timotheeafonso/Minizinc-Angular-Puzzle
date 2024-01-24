@@ -2,18 +2,17 @@ import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {PuzzleFactoryService} from "../models/factories/puzzle-factory-service";
-import {Puzzle} from "../models/puzzle";
 import * as MiniZinc from "minizinc";
+import {RouterModule} from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, RouterModule],
   templateUrl: '../templates/app.component.html',
   styleUrl: '../css/app.component.css',
 })
-
 export class AppComponent {
   title = 'Peuzeulz !';
   puzzle: any;

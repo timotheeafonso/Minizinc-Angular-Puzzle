@@ -8,8 +8,8 @@ import {NgClass, NgForOf} from "@angular/common";
     NgClass,
     NgForOf
   ],
-  templateUrl: './puzzle-computer.component.html',
-  styleUrl: './puzzle-computer.component.css'
+  templateUrl: '../templates/puzzle-computer.component.html',
+  styleUrl: '../css/puzzle-computer.component.css'
 })
 export class PuzzleComputerComponent {
   clickedOnce: { [key: string]: boolean } = {};

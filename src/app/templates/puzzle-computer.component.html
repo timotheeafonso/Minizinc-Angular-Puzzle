@@ -1,229 +1,241 @@
 <!-- computer-puzzle.component.html -->
-<table>
-  <tbody>
+<!--<div class="content">-->
+  <table>
+    <tbody>
 
-  <tr>
-    <td></td>
+    <tr>
+      <td></td>
 
-    <td>
-      <table class="top-table">
-        <tbody>
-        <tr>
-          <td class="title-vertical" colspan="6">Processor</td>
-        </tr>
-        <tr *ngFor="let speed of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']">
-          <td class="js-item-vert  vertical-text-item">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                {{ speed }}
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="6">Processor</td>
+          </tr>
+          <tr>
+            <td *ngFor="let speed of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ speed }}
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="top-table">
-        <tbody>
-        <tr>
-          <td class="title-vertical" colspan="5">Hard Disk</td>
-        </tr>
-        <tr *ngFor="let capacity of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
-          <td class="js-item vertical-text-item">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                {{ capacity }}
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Hard Disk</td>
+          </tr>
+          <tr>
+            <td *ngFor="let capacity of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ capacity }}
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="top-table">
-        <tbody>
-        <tr>
-          <td class="title-vertical" colspan="5">Price</td>
-        </tr>
-        <tr *ngFor="let price of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-          <td class="js-item vertical-text-item">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                {{ price }}
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Price</td>
+          </tr>
+          <tr>
+            <td *ngFor="let price of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ price }}
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-  </tr>
+    </tr>
 
-  <tr>
+    <tr>
 
-    <td>
-      <table class="side-table">
-        <tbody>
-        <tr>
-          <td class="title-horizontal" rowspan="6">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                Monitor
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Monitor
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        <tr *ngFor="let size of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-          <td class="js-item horizontal-text-item">{{ size }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          <tr *ngFor="let size of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
+            <td class="js-item horizontal-text-item">{{ size }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-          <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
+            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
 
-        </tr>
-        </tbody>
-      </table>
-    </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-          <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
+            <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
+                [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
 
-        </tr>
-        </tbody>
-      </table>
-    </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-          <td class="cell" *ngFor="let col of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
+            <td class="cell" *ngFor="let col of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-  </tr>
+    </tr>
 
-  <tr>
+    <tr>
 
-    <td>
-      <table class="side-table">
-        <tbody>
-        <tr>
-          <td class="title-horizontal" rowspan="6">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                Price
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Price
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        <tr *ngFor="let p of ['$ 699,00','$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-          <td class="js-item horizontal-text-item">{{ p }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          <tr *ngFor="let p of ['$ 699,00','$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
+            <td class="js-item horizontal-text-item">{{ p }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-          <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
+            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
 
-        </tr>
-        </tbody>
-      </table>
-    </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-          <td  class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
+            <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
+                [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
 
-        </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
 
-  <tr>
+    <tr>
 
-    <td>
-      <table class="side-table">
-        <tbody>
-        <tr>
-          <td class="title-horizontal" rowspan="6">
-            <div class="vertical-text">
-              <div class="vertical-text-inner">
-                Hard Disk
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Hard Disk
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-        <tr *ngFor="let hdd of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
-          <td class="js-item horizontal-text-item">{{ hdd }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
+            </td>
+          </tr>
+          <tr *ngFor="let hdd of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
+            <td class="js-item horizontal-text-item">{{ hdd }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
 
-    <td>
-      <table class="">
-        <tbody>
-        <tr *ngFor="let row of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
-          <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']" [attr.data-x]="col" [attr.data-y]="row"
-              (click)="cellClicked(row, col)"
-              (dblclick)="cellDoubleClicked(row, col)"
-              [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-            <span>&nbsp;</span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
+            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
+
+<!--</div>-->

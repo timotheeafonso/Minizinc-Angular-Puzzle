@@ -1,6 +1,11 @@
+content {
+}
+
+table {
+  margin-inline: auto;
+}
 
 table, td {
-  border: 1px solid black;
   text-align: center;
   border-collapse: collapse;
 }
@@ -20,14 +25,15 @@ td.double-clicked {
 }
 
 .js-item {
-  border: 1px solid #ddd; /* Bordure entre les cellules */
   text-align: center; /* Centre le texte dans la cellule */
 }
 
-.cell{
+.cell {
   width: 30px;
-  height:30px;
+  height: 30px;
+  border: 2px solid #ddd;
 }
+
 .vertical-text-item {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -36,16 +42,25 @@ td.double-clicked {
   height: 90px;
 }
 
-.horizontal-text-item{
+.horizontal-text-item {
   width: 80px;
   height: 30px;
 }
-.title-horizontal{
+
+.title-horizontal {
   width: 90px;
   height: 150px;
 }
 
-.title-vertical{
+.title-vertical {
   width: 150px;
   height: 50px;
 }
+
+.js-item, .title-vertical, .title-horizontal {
+  border-radius: 3rem;
+  border-width: 2px;
+  border-style: solid;
+  border-image: var(--red-to-pink-to-purple-vertical-gradient) 1;
+}
+

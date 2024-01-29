@@ -22,6 +22,10 @@ td.annule {
   background-color: white;
 }
 
+td.propagate {
+  background-color: orange;
+}
+
 /* computer-puzzle.component.css */
 .top-table {
   width: 100%; /* Utilise la largeur complète du conteneur parent */

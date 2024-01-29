@@ -11,11 +11,15 @@ table, td {
 }
 
 td.clicked {
+  background-color: red;
+}
+
+td.clicked-twice {
   background-color: green;
 }
 
-td.double-clicked {
-  background-color: red;
+td.annule {
+  background-color: white;
 }
 
 /* computer-puzzle.component.css */

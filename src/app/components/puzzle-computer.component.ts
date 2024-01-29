@@ -14,15 +14,35 @@ import {NgClass, NgForOf} from "@angular/common";
 export class PuzzleComputerComponent {
   clickedOnce: { [key: string]: boolean } = {};
   clickedTwice: { [key: string]: boolean } = {};
+  annule: { [key: string]: boolean } = {};
 
   cellClicked(name: string, pc: string) {
+    if(this.clickedOnce[name + pc] == undefined && this.clickedTwice[name + pc] == undefined && this.annule[name + pc] == undefined) {
+        this.cellClickedOnce(name, pc);
+    }else if(this.clickedOnce[name + pc] ){
+        this.cellClickedTwice(name, pc);
+    }else if(this.clickedTwice[name + pc]  ) {
+        this.cellAnnule(name,pc);
+    }else if(this.annule[name + pc] ) {
+        this.cellClickedOnce(name, pc);
+    }
+  }
+  cellClickedOnce(name: string, pc: string) {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
+    this.annule[name + pc] = false;
   }
 
-  cellDoubleClicked(name: string, pc: string) {
+  cellClickedTwice(name: string, pc: string) {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = true;
+    this.annule[name + pc] = false;
+  }
+
+  cellAnnule(name: string, pc: string) {
+    this.clickedOnce[name + pc] = false;
+    this.clickedTwice[name + pc] = false;
+    this.annule[name + pc] = true;
   }
 }
 

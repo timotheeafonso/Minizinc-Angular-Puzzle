@@ -1,0 +1,241 @@
+<!-- movies-puzzle.component.html -->
+<!--<div class="content">-->
+  <table>
+    <tbody>
+
+    <tr>
+      <td></td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="6">Film</td>
+          </tr>
+          <tr>
+            <td *ngFor="let film of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ film }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Day</td>
+          </tr>
+          <tr>
+            <td *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ day }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Time</td>
+          </tr>
+          <tr>
+            <td *ngFor="let time of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ time }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Name
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let film of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+            <td class="js-item horizontal-text-item">{{ film }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']" [attr.data-x]="col"
+                [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+            <td class="cell" *ngFor="let col of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Price
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let p of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
+            <td class="js-item horizontal-text-item">{{ p }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
+            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
+            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']" [attr.data-x]="col"
+                [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Hard Disk
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']">
+            <td class="js-item horizontal-text-item">{{ day }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']">
+            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                (dblclick)="cellDoubleClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+
+<!--</div>-->

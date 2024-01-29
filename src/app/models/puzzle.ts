@@ -1,4 +1,5 @@
 import * as MiniZinc from 'minizinc';
+import {waitForAsync} from "@angular/core/testing";
 
 export class Puzzle {
   model: MiniZinc.Model = new MiniZinc.Model();
@@ -25,7 +26,8 @@ export class Puzzle {
     this.model.addFile(name, fileContent);
   }
 
-  solveModel() {
+   solveModel() :any{
+    let solution : string = ""
     const solve = this.model.solve({
       options: {
         solver: 'gecode',
@@ -33,7 +35,15 @@ export class Puzzle {
       }
     });
     solve.then(result => {
-      console.log(JSON.stringify(result.solution));
+        JSON.stringify(result.solution);
     });
   }
+
+  addString(param: string) {
+    this.model.addString(param)
+  }
+  async getSolution(): Promise<any> {
+    return  this.solveModel();
+  }
+
 }

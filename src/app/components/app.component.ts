@@ -13,6 +13,7 @@ import {RouterModule} from '@angular/router';
   templateUrl: '../templates/app.component.html',
   styleUrl: '../css/app.component.css',
 })
+
 export class AppComponent {
   title = 'Peuzeulz !';
   puzzle: any;

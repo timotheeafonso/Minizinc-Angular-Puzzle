@@ -96,8 +96,7 @@
             <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -113,8 +112,7 @@
             <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -130,8 +128,7 @@
             <td class="cell" *ngFor="let col of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -169,8 +166,7 @@
             <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -186,8 +182,7 @@
             <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -225,8 +220,7 @@
             <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>

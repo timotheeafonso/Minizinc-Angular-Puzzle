@@ -1,5 +1,5 @@
 <!-- movies-puzzle.component.html -->
-<!--<div class="content">-->
+<div class="content">
   <table>
     <tbody>
 
@@ -93,7 +93,8 @@
         <table class="">
           <tbody>
           <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
-            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+            <td class="cell"
+                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 (dblclick)="cellDoubleClicked(row, col)"
@@ -110,7 +111,8 @@
         <table class="">
           <tbody>
           <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
-            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']" [attr.data-x]="col"
+            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+                [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 (dblclick)="cellDoubleClicked(row, col)"
@@ -150,7 +152,7 @@
             <td class="title-horizontal" rowspan="6">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  Price
+                  Time
                 </div>
               </div>
             </td>
@@ -166,7 +168,8 @@
         <table class="">
           <tbody>
           <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
-            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+            <td class="cell"
+                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 (dblclick)="cellDoubleClicked(row, col)"
@@ -183,7 +186,8 @@
         <table class="">
           <tbody>
           <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
-            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']" [attr.data-x]="col"
+            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+                [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 (dblclick)="cellDoubleClicked(row, col)"
@@ -206,7 +210,7 @@
             <td class="title-horizontal" rowspan="6">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  Hard Disk
+                  Day
                 </div>
               </div>
             </td>
@@ -222,7 +226,8 @@
         <table class="">
           <tbody>
           <tr *ngFor="let row of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']">
-            <td class="cell" *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+            <td class="cell"
+                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 (dblclick)="cellDoubleClicked(row, col)"
@@ -238,4 +243,37 @@
     </tbody>
   </table>
 
-<!--</div>-->
+  <ul>
+
+    <li data-clue-id="0">1. Of the 20-hundreds releases, neither of which was Jessica's choice, one opened the week
+      and
+      one closed the week.
+    </li>
+
+    <li data-clue-id="1">2. The latest of the 19-hundreds releases was shown at 30 minutes past the hour.</li>
+
+    <li data-clue-id="2">3. The releases shown before 8:00 pm were on consecutive days, as were the releases shown
+      after
+      8:00 pm.
+    </li>
+
+    <li data-clue-id="3">4. One of the men and one of the women had a showing before 8:00 pm, but neither was
+      mid-week.
+    </li>
+
+    <li data-clue-id="4">5. Mark, whose choice was Scarecrow, had a showing at a time of one hour and five minutes
+      after
+      that of Scarface.
+    </li>
+
+    <li data-clue-id="5">6. Neither Miss Farmer nor Miss Peters had a showing on an even-numbered day</li>
+
+    <li data-clue-id="6">7. 88 Minutes showed at a time both 40 minutes to the hour and 40 minutes after the Thursday
+      showing.
+    </li>
+
+  </ul>
+
+</div>
+
+<div></div>

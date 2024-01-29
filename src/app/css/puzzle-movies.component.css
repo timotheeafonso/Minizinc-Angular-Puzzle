@@ -1,8 +1,24 @@
 content {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  box-sizing: inherit;
 }
 
 table {
-  margin-inline: auto;
+  /*margin-inline: auto;*/
+}
+
+ul {
+  /*margin-inline: auto;*/
+  display: inline-list-item;
+  min-width: 300px;
+  max-width: 500px;
+  width: auto;
+}
+
+li {
+  max-width: 500px;
 }
 
 table, td {

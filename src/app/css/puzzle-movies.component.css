@@ -1,24 +1,17 @@
 content {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  box-sizing: inherit;
+  display: flex;
 }
 
 table {
-  /*margin-inline: auto;*/
+  margin-inline: auto;
+  flex: 3;
 }
 
 ul {
-  /*margin-inline: auto;*/
+  flex: 1;
+  margin-inline: auto;
   display: inline-list-item;
   min-width: 300px;
-  max-width: 500px;
-  width: auto;
-}
-
-li {
-  max-width: 500px;
 }
 
 table, td {

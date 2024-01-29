@@ -16,6 +16,7 @@ export class PuzzleComputerComponent {
   clickedTwice: { [key: string]: boolean } = {};
   annule: { [key: string]: boolean } = {};
   propagates: { [key: string]: boolean } = {};
+  nb_propagates: { [key: string]: number } = {};
   monitor = ['13\'','15\'', '15.6\'', '21.5\'', '27\''];
   processor =['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz'];
   disk = ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb'];
@@ -107,12 +108,21 @@ export class PuzzleComputerComponent {
 
     if((this.clickedTwice[name + pc]==false || this.clickedTwice[name + pc]==undefined)  && (this.clickedOnce[name + pc]==false || this.clickedOnce[name + pc]==undefined )) {
       this.propagates[name + pc] = true;
+      if(this.nb_propagates[name + pc] == undefined)
+        this.nb_propagates[name + pc]=1;
+      else this.nb_propagates[name + pc]+=1;
+      console.log(this.nb_propagates[name + pc]);
     }
   }
 
   cellReversePropagate(name: string, pc: string) {
     if((this.clickedTwice[name + pc]==false || this.clickedTwice[name + pc]==undefined)  && (this.clickedOnce[name + pc]==false || this.clickedOnce[name + pc]==undefined )) {
-      this.propagates[name + pc] = false;
+      if (this.nb_propagates[name + pc] == 1) {
+        this.propagates[name + pc] = false;
+        this.nb_propagates[name + pc] -=1;
+      } else if (this.nb_propagates[name + pc] > 1) {
+        this.nb_propagates[name + pc] -=1;
+    }
     }
   }
 }

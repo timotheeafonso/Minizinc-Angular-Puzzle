@@ -1,0 +1,174 @@
+<!-- create-puzzle.component.html -->
+<div class="content">
+  <div class="form-style-5">
+    <form (ngSubmit)="onSubmit()">
+      <fieldset>
+        <legend><span class="number">1</span> Personnes</legend>
+        <div *ngFor="let person of people; let i = index">
+          <input type="text" [(ngModel)]="person.name" name="person{{ i }}"  placeholder="Nom {{ i+1 }}" required>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><span class="number">2</span> Objets</legend>
+        <div *ngFor="let object of objects; let i = index">
+          <input type="text" [(ngModel)]="object.name" name="object{{ i }}" placeholder="Objet {{ i+1 }}" required>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><span class="number">3</span> Lieux</legend>
+        <div *ngFor="let place of places; let i = index">
+          <input type="text" [(ngModel)]="place.name" name="place{{ i }}" placeholder="Lieux {{ i+1 }}" required="required">
+        </div>
+      </fieldset>
+      <input type="submit" (click)="showTable = true" value="Créer" />
+    </form>
+  </div>
+
+
+  <table *ngIf="showTable">
+    <tbody>
+
+    <tr>
+      <td></td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Objets</td>
+          </tr>
+          <tr>
+            <td *ngFor="let o of objects"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ o.name }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Lieux</td>
+          </tr>
+          <tr>
+            <td *ngFor="let pl of places"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ pl.name }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Personnes
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let p of people">
+            <td class="js-item horizontal-text-item">{{ p.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of people">
+            <td class="cell" *ngFor="let col of objects"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row.name, col.name)"
+                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of people">
+            <td class="cell" *ngFor="let col of places"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row.name, col.name)"
+                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td>
+        <table class="side-table">
+          <tbody>
+          <tr>
+            <td class="title-horizontal" rowspan="6">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  Lieux
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let pl of places">
+            <td class="js-item horizontal-text-item">{{ pl.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of places">
+            <td class="cell" *ngFor="let col of objects"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row.name, col.name)"
+                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+              <span>&nbsp;</span>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+</div>
+

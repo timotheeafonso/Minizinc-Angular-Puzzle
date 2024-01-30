@@ -1,10 +1,10 @@
 <!-- create-puzzle.component.html -->
 <div class="content">
-  <div class="form-style-5">
-    <form (ngSubmit)="onSubmit()">
+  <div class="form-style-5" *ngIf="showInitForm">
+    <form>
       <fieldset>
         <legend><span class="number">1</span> Personnes</legend>
-        <div *ngFor="let person of people; let i = index">
+        <div *ngFor="let person of peoples; let i = index">
           <input type="text" [(ngModel)]="person.name" name="person{{ i }}"  placeholder="Nom {{ i+1 }}" required>
         </div>
       </fieldset>
@@ -20,155 +20,181 @@
           <input type="text" [(ngModel)]="place.name" name="place{{ i }}" placeholder="Lieux {{ i+1 }}" required="required">
         </div>
       </fieldset>
-      <input type="submit" (click)="showTable = true" value="Créer" />
+      <input type="submit" (click)="showContraintes = true;showInitForm=false" value="Créer" />
     </form>
   </div>
 
 
-  <table *ngIf="showTable">
-    <tbody>
 
-    <tr>
-      <td></td>
 
-      <td>
-        <table class="top-table">
-          <tbody>
-          <tr>
-            <td class="title-vertical" colspan="5">Objets</td>
-          </tr>
-          <tr>
-            <td *ngFor="let o of objects"
-                class="js-item vertical-text-item">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  {{ o.name }}
+
+
+  <div class="form-style-5" *ngIf="showContraintes">
+    <form (ngSubmit)="onSubmit()">
+      <fieldset>
+        <legend><span class="number">1</span> Affectations</legend>
+        <div *ngFor="let personne of peoples; let i = index">
+          <label>{{ personne.name }}</label>
+          <select name="field4" [(ngModel)]="personne.object">
+            <optgroup label="Objets">
+                <option value=""></option>
+                <option *ngFor="let obj of objects " [ngValue]="obj.name">{{obj.name}}</option>
+            </optgroup>
+          </select>
+          <select name="field4"  [(ngModel)]="personne.lieu">
+            <optgroup label="Lieux">
+              <option value=""></option>
+              <option *ngFor="let pl of places;" [ngValue]="pl.name">{{pl.name}}</option>
+            </optgroup>
+          </select>
+        </div>
+        <div *ngFor="let p of places; let i = index">
+          <label>{{ p.name }}</label>
+          <select name="field4" [(ngModel)]="p.object">
+            <optgroup label="Objets">
+              <option value=""></option>
+              <option *ngFor="let o of objects " [ngValue]="o.name">{{o.name}}</option>
+            </optgroup>
+          </select>
+        </div>
+      </fieldset>
+      <input type="submit" (click)="showTable = true;showContraintes=false; showInitForm = false;onSubmit()" value="Ajouter" />
+    </form>
+  </div>
+
+
+
+
+
+  <div class="form-style-5" *ngIf="showTable">
+    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false" value="Créer un nouveau puzzle" />
+    <table >
+      <tbody>
+      <tr>
+        <td></td>
+        <td>
+          <table class="top-table">
+            <tbody>
+            <tr>
+              <td class="title-vertical" colspan="5">Objets</td>
+            </tr>
+            <tr>
+              <td *ngFor="let o of objects"
+                  class="js-item vertical-text-item">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    {{ o.name }}
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="top-table">
-          <tbody>
-          <tr>
-            <td class="title-vertical" colspan="5">Lieux</td>
-          </tr>
-          <tr>
-            <td *ngFor="let pl of places"
-                class="js-item vertical-text-item">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  {{ pl.name }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="top-table">
+            <tbody>
+            <tr>
+              <td class="title-vertical" colspan="5">Lieux</td>
+            </tr>
+            <tr>
+              <td *ngFor="let pl of places"
+                  class="js-item vertical-text-item">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    {{ pl.name }}
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-    </tr>
-
-    <tr>
-
-      <td>
-        <table class="side-table">
-          <tbody>
-          <tr>
-            <td class="title-horizontal" rowspan="6">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  Personnes
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="side-table">
+            <tbody>
+            <tr>
+              <td class="title-horizontal" rowspan="6">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    Personnes
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          <tr *ngFor="let p of people">
-            <td class="js-item horizontal-text-item">{{ p.name }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="">
-          <tbody>
-          <tr *ngFor="let row of people">
-            <td class="cell" *ngFor="let col of objects"
-                [attr.data-x]="col" [attr.data-y]="row"
-                (click)="cellClicked(row.name, col.name)"
-                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
-              <span>&nbsp;</span>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="">
-          <tbody>
-          <tr *ngFor="let row of people">
-            <td class="cell" *ngFor="let col of places"
-                [attr.data-x]="col" [attr.data-y]="row"
-                (click)="cellClicked(row.name, col.name)"
-                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
-              <span>&nbsp;</span>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-    </tr>
-
-    <tr>
-
-      <td>
-        <table class="side-table">
-          <tbody>
-          <tr>
-            <td class="title-horizontal" rowspan="6">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  Lieux
+              </td>
+            </tr>
+            <tr *ngFor="let p of peoples">
+              <td class="js-item horizontal-text-item">{{ p.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of peoples">
+              <td class="cell" *ngFor="let col of objects"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of peoples">
+              <td class="cell" *ngFor="let col of places"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="side-table">
+            <tbody>
+            <tr>
+              <td class="title-horizontal" rowspan="6">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    Lieux
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-          <tr *ngFor="let pl of places">
-            <td class="js-item horizontal-text-item">{{ pl.name }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="">
-          <tbody>
-          <tr *ngFor="let row of places">
-            <td class="cell" *ngFor="let col of objects"
-                [attr.data-x]="col" [attr.data-y]="row"
-                (click)="cellClicked(row.name, col.name)"
-                [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
-              <span>&nbsp;</span>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-    </tr>
-
-    </tbody>
-  </table>
-
+              </td>
+            </tr>
+            <tr *ngFor="let pl of places">
+              <td class="js-item horizontal-text-item">{{ pl.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of places">
+              <td class="cell" *ngFor="let col of objects"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 

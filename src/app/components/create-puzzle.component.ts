@@ -22,16 +22,28 @@ export class CreatePuzzleComponent {
   propagates: { [key: string]: boolean } = {};
   nb_propagates: { [key: string]: number } = {};
 
-  people: { name: string }[] = [{ name: '' }, { name: '' }, { name: '' }];
-  objects: { name: string }[] = [{ name: '' }, { name: '' }, { name: '' }];
-  places: { name: string }[] = [{ name: '' }, { name: '' }, { name: '' }];
+  peoples: { name: string, object: string, lieu: string }[] = [
+    { name: '', object: '', lieu: '' },
+    { name: '', object: '', lieu: '' },
+    { name: '', object: '', lieu: '' }
+  ];
+  objects: { name: string, personne: string, lieu: string }[] = [
+    { name: '', personne: '', lieu: '' },
+    { name: '', personne: '', lieu: '' },
+    { name: '', personne: '', lieu: '' }
+  ];
+  places: { name: string, object: string, personne: string }[] = [
+    { name: '', object: '', personne: '' },
+    { name: '', object: '', personne: '' },
+    { name: '', object: '', personne: '' }
+  ];
+
+  showInitForm : boolean = true;
+  showContraintes: boolean = false;
   showTable: boolean = false;
   onSubmit() {
-    console.log('Nouvelles personnes :', this.people);
-    console.log('Nouveaux objets :', this.objects);
-    console.log('Nouveaux lieux :', this.places);
-
-    // Vous pouvez ajouter ici le code pour traiter les données (par exemple, les envoyer à un service)
+    console.log("okokokokokokok");
+      console.log(this.peoples);
   }
   cellClicked(name: string, pc: string) {
     console.log(name);
@@ -54,16 +66,16 @@ export class CreatePuzzleComponent {
   propage(name: string, pc: string){
     var var1: string[] = [];
     var var2: string[] =[];
-    if (this.people.some(person => person.name == name)) {
-      this.people.forEach((m) => {if(m.name != name) {var1.push(m.name)}});
+    if (this.peoples.some(person => person.name == name)) {
+      this.peoples.forEach((m) => {if(m.name != name) {var1.push(m.name)}});
     }else if (this.objects.some(obj => obj.name == name)) {
       this.objects.forEach((o) => {if(o.name != name) {var1.push(o.name)}});
     }else if (this.places.some(place => place.name == name)) {
       this.places.forEach((pl) => {if(pl.name != name) {var1.push(pl.name)}});
     }
 
-    if (this.people.some(person => person.name == pc)) {
-      this.people.forEach((m) => {if(m.name != pc) {var2.push(m.name)}});
+    if (this.peoples.some(person => person.name == pc)) {
+      this.peoples.forEach((m) => {if(m.name != pc) {var2.push(m.name)}});
     }else if (this.objects.some(obj => obj.name == pc)) {
       this.objects.forEach((o) => {if(o.name != pc) {var2.push(o.name)}});
     }else if (this.places.some(place => place.name == pc)) {

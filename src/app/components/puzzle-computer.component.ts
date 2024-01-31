@@ -22,7 +22,7 @@ export class PuzzleComputerComponent {
 
   constructor(private puzzleFactory: PuzzleFactoryService) {
     this.puzzle = new Puzzle("computer.mzn");
-    this.solution = this.puzzle.solveModel() ;
+    this.puzzle.solveModel() ;
   }
 
   clickedOnce: { [key: string]: boolean } = {};
@@ -31,7 +31,8 @@ export class PuzzleComputerComponent {
   cellClicked(name: string, pc: string) {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
-    console.log(this.solution);
+    console.log( this.puzzle.solveModel()) ;
+
   }
 
   cellDoubleClicked(name: string, pc: string) {

@@ -26,7 +26,7 @@ export class Puzzle {
     this.model.addFile(name, fileContent);
   }
 
-   solveModel() :any{
+   solveModel(){
     let solution : string = ""
     const solve = this.model.solve({
       options: {
@@ -35,6 +35,7 @@ export class Puzzle {
       }
     });
     solve.then(result => {
+        // console.log(result.solution);
         JSON.stringify(result.solution);
     });
   }

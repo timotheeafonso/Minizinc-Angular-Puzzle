@@ -18,7 +18,7 @@ export class AppComponent {
   title = 'Peuzeulz !';
   puzzle: any;
 
-  constructor(private puzzleFactory: PuzzleFactoryService) {
+  constructor() {
     MiniZinc.init({
       workerURL: 'http://localhost:4200/assets/minizinc-worker.js',
       wasmURL: 'http://localhost:4200/assets/minizinc.wasm',
@@ -26,12 +26,6 @@ export class AppComponent {
     }).then(() => {
       console.log('Ready');
     });
-
-    this.getPuzzle('computer.mzn');
-  }
-
-  getPuzzle(name: string) {
-    this.puzzle = this.puzzleFactory.getPuzzleInstance(name)
   }
 
 }

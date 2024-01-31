@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Puzzle } from '../puzzle';
+import {PuzzleComputer} from "../puzzle-computer";
 
 @Injectable({
   providedIn: 'root',
@@ -8,12 +9,12 @@ export class PuzzleFactoryService {
 
   public getPuzzleInstance(type: string) {
     if(type == "computer")
-      return new Puzzle("computer.mzn");
+      return new PuzzleComputer();
     else if (type == "movies")
-      return new Puzzle("movies.mzn")
+      return new PuzzleComputer()
     else if (type == "pastaAndWine")
-      return new Puzzle("pastaAndWine.mzn")
+      return new PuzzleComputer()
     else
-      return new Puzzle("carreMagique.mzn")
+      return new PuzzleComputer()
   }
 }

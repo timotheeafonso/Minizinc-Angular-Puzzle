@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {NgClass, NgForOf} from "@angular/common";
 import {PuzzleFactoryService} from "../models/factories/puzzle-factory-service";
-import {Puzzle} from "../models/puzzle";
-import {waitForAsync} from "@angular/core/testing";
+import {SolveProgress} from "minizinc";
+import {PuzzleComputer} from "../models/puzzle-computer";
 
 @Component({
   selector: 'app-puzzle-computer',
@@ -17,12 +17,13 @@ import {waitForAsync} from "@angular/core/testing";
 
 
 export class PuzzleComputerComponent {
-  private solution: any ;
+  public solution: any;
   private puzzle: any;
 
-  constructor(private puzzleFactory: PuzzleFactoryService) {
-    this.puzzle = new Puzzle("computer.mzn");
-    this.puzzle.solveModel() ;
+  constructor() {
+    this.puzzle = new PuzzleComputer();
+    this.solution = this.puzzle.solveModel();
+    console.log("solve : " + this.solution);
   }
 
   clickedOnce: { [key: string]: boolean } = {};
@@ -31,8 +32,7 @@ export class PuzzleComputerComponent {
   cellClicked(name: string, pc: string) {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
-    console.log( this.puzzle.solveModel()) ;
-
+    console.log(this.solution);
   }
 
   cellDoubleClicked(name: string, pc: string) {
@@ -40,3 +40,4 @@ export class PuzzleComputerComponent {
     this.clickedTwice[name + pc] = true;
   }
 }
+

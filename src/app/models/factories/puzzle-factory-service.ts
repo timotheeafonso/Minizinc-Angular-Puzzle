@@ -13,6 +13,8 @@ export class PuzzleFactoryService {
       return new Puzzle("movies.mzn")
     else if (type == "pastaAndWine")
       return new Puzzle("pastaAndWine.mzn")
+    else if (type == "createPuzzle")
+      return new Puzzle("createPuzzle.mzn")
     else
       return new Puzzle("carreMagique.mzn")
   }

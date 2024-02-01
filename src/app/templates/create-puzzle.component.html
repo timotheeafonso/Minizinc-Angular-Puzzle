@@ -31,43 +31,92 @@
 
   <div class="form-style-5" *ngIf="showContraintes">
     <form (ngSubmit)="onSubmit()">
-      <fieldset>
-        <legend><span class="number">1</span> Affectations</legend>
-        <div *ngFor="let personne of peoples; let i = index">
-          <label>{{ personne.name }}</label>
-          <select name="field4" [(ngModel)]="personne.object">
-            <optgroup label="Objets">
-                <option value=""></option>
-                <option *ngFor="let obj of objects " [ngValue]="obj.name">{{obj.name}}</option>
-            </optgroup>
+        <legend><span class="number">1</span> Contraintes</legend>
+        <div class="contraintes" *ngFor="let select of selects; let i = index">
+          <select name="select1{{i}}" [(ngModel)]="select.var1">
+              <option value=""></option>
+              <optgroup label="Personnes">
+                <option *ngFor="let p of peoples">{{p.name}}</option>
+              </optgroup>
+              <optgroup label="Objets">
+                <option *ngFor="let o of objects">{{o.name}}</option>
+              </optgroup>
           </select>
-          <select name="field4"  [(ngModel)]="personne.lieu">
+          <select  name="operateur{{i}}" [(ngModel)]="select.operateur">
+            <option value=""></option>
+            <option  value="+">+</option>
+            <option value="-">-</option>
+          </select>
+          <select name="select2{{i}}"  [(ngModel)]="select.var2">
+            <option value=""></option>
             <optgroup label="Lieux">
-              <option value=""></option>
-              <option *ngFor="let pl of places;" [ngValue]="pl.name">{{pl.name}}</option>
+              <option *ngFor="let pl of places">{{pl.name}}</option>
             </optgroup>
-          </select>
-        </div>
-        <div *ngFor="let p of places; let i = index">
-          <label>{{ p.name }}</label>
-          <select name="field4" [(ngModel)]="p.object">
             <optgroup label="Objets">
-              <option value=""></option>
-              <option *ngFor="let o of objects " [ngValue]="o.name">{{o.name}}</option>
+              <option *ngFor="let o of objects">{{o.name}}</option>
             </optgroup>
           </select>
         </div>
-      </fieldset>
-      <input type="submit" (click)="showTable = true;showContraintes=false; showInitForm = false;onSubmit()" value="Ajouter" />
+
+
+      <input type="button" (click)="onSubmitAdd('nonAffectation')" value="+" />
+
+      <input type="submit" (click)="showTable = true; showContraintes = false; showInitForm = false; onSubmit()" value="Ajouter" />
     </form>
+
   </div>
 
 
 
-
-
   <div class="form-style-5" *ngIf="showTable">
-    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false" value="Créer un nouveau puzzle" />
+    <ul>
+      <ng-container *ngFor="let p of peoples;">
+        <ng-container *ngIf="p.object.length == 1;">
+          <li>{{p.name}} possède l'objet {{p.object[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.object.length == 2;">
+          <li>{{p.name}} possède soit l'objet {{p.object[0]}} soit l'objet {{p.object[1]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.lieu.length == 1">
+          <li >{{p.name}} est au lieux {{p.lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.lieu.length == 2">
+          <li >{{p.name}} est soit au lieux {{p.lieu[0]}} soit au lieux {{p.lieu[1]}}</li>
+        </ng-container>
+
+        <ng-container *ngIf="p.non_object.length == 1;">
+          <li>{{p.name}} ne possède pas l'objet {{p.non_object[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_object.length == 2;">
+          <li>{{p.name}} ne possède ni l'objet {{p.non_object[0]}} ni l'objet {{p.non_object[1]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_lieu.length == 1">
+          <li >{{p.name}} n'est pas au lieux {{p.non_lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_lieu.length == 2">
+          <li >{{p.name}} est ni au lieux {{p.non_lieu[0]}} ni au lieu {{p.non_lieu[1]}}</li>
+        </ng-container>
+      </ng-container>
+
+
+      <ng-container *ngFor="let obj of objects;">
+        <ng-container *ngIf="obj.lieu.length == 1">
+          <li >L'objet {{obj.name}} est au lieux {{obj.lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="obj.lieu.length == 2">
+          <li >L'objet {{obj.name}} est soit au lieux {{obj.lieu[0]}} soit au lieux {{obj.lieu[1]}}</li>
+        </ng-container>
+
+        <ng-container *ngIf="obj.non_lieu.length == 1">
+          <li >L'objet {{obj.name}} n'est pas au lieux {{obj.non_lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="obj.non_lieu.length == 2">
+          <li >L'objet {{obj.name}} est ni au lieux {{obj.non_lieu[0]}} ni au lieux {{obj.non_lieu[1]}}</li>
+        </ng-container>
+      </ng-container>
+    </ul>
+
+    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="Créer un nouveau puzzle" />
     <table >
       <tbody>
       <tr>

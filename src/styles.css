@@ -55,3 +55,9 @@
     margin-block: 1.5rem;
   }
 }
+
+.lineThrough {
+  text-decoration:line-through;
+  text-decoration-color: #bbbbbb;
+  color: #bbbbbb;
+}

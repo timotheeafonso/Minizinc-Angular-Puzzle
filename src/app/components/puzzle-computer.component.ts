@@ -110,10 +110,11 @@ export class PuzzleComputerComponent {
     if(this.solution["__zone_symbol__state"]) {
       // console.log(this.solution["__zone_symbol__value"].solution.output.json);
       console.log(this.solution["__zone_symbol__value"].solution.output.default);
+      console.log(this.clickedTwice)
+      this.testSuccess();
     } else {
       console.log("solving ...");
     }
-      this.showModalSuccess = true;
   }
 
   cellClickedTwice(name: string, pc: string) {
@@ -135,7 +136,7 @@ export class PuzzleComputerComponent {
       if(this.nb_propagates[name + pc] == undefined)
         this.nb_propagates[name + pc]=1;
       else this.nb_propagates[name + pc]+=1;
-      console.log(this.nb_propagates[name + pc]);
+      // console.log(this.nb_propagates[name + pc]);
     }
   }
 
@@ -156,6 +157,10 @@ export class PuzzleComputerComponent {
     } else {
       element.classList.add('lineThrough')
     }
+  }
+
+  testSuccess() {
+    // this.showModalSuccess = true;
   }
 
 }

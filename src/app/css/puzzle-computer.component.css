@@ -84,7 +84,6 @@ td.propagate {
 }
 
 .js-item, .title-vertical, .title-horizontal {
-  border-radius: 3rem;
   border-width: 2px;
   border-style: solid;
   border-image: var(--red-to-pink-to-purple-vertical-gradient) 1;

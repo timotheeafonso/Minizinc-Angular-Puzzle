@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {NgClass, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import { CommonModule } from '@angular/common';
+import {PuzzleComputer} from "../models/puzzle-computer";
+import {PuzzleCreate} from "../models/puzzle-create";
 
 @Component({
   selector: 'app-create-puzzle',
@@ -17,6 +19,8 @@ import { CommonModule } from '@angular/common';
 
 })
 export class CreatePuzzleComponent {
+  public solution: any;
+  private puzzle: any;
   clickedOnce: { [key: string]: boolean } = {};
   clickedTwice: { [key: string]: boolean } = {};
   annule: { [key: string]: boolean } = {};
@@ -88,6 +92,8 @@ export class CreatePuzzleComponent {
     console.log(this.places);
     console.log(this.objects);
 
+    this.createMinizincPuzzle();
+
   }
 
   onSubmitNewPuzzle() {
@@ -131,6 +137,117 @@ export class CreatePuzzleComponent {
         this.selects[index].show_obj1 = true;
       }
     }
+  }
+
+  createMinizincPuzzle(){
+    this.puzzle = new PuzzleCreate();
+
+    this.peoples.forEach((p,index) => {
+       var contrainte="";
+       var contrainteAAjouter = false;
+       p.lieu.forEach((l,index2)=>{
+         var indexLieu = this.places.findIndex(pl => pl.name == l);
+         if (index2==0) {
+           contrainteAAjouter = true;
+           contrainte += "constraint (lieux_p["+index+"]=="+ indexLieu;
+         }else{
+           contrainte += " \\/ lieux_p["+index+"]=="+indexLieu;
+         }
+       });
+       if(contrainteAAjouter) {
+         contrainte += ");\n";
+         console.log(contrainte);
+         this.puzzle.addString(contrainte);
+       }
+       contrainte="";
+       contrainteAAjouter = false;
+        p.object.forEach((o,index2)=>{
+          var indexObjet = this.objects.findIndex(obj => obj.name == o);
+          if (indexObjet==0) {
+            contrainteAAjouter = true;
+            contrainte += "constraint (objets_p["+index+"]=="+ indexObjet;
+          }else{
+            contrainte += " \\/ objets_p["+index+"]=="+indexObjet;
+          }
+        });
+        if(contrainteAAjouter) {
+          contrainte += ");\n";
+          console.log(contrainte);
+          this.puzzle.addString(contrainte);
+        }
+        contrainte="";
+        contrainteAAjouter = false;
+        p.non_lieu.forEach((l,index2)=>{
+          var indexLieu = this.places.findIndex(pl => pl.name == l);
+          if (index2==0) {
+            contrainteAAjouter = true;
+            contrainte += "constraint (lieux_p["+index+"]!="+ indexLieu;
+          }else{
+            contrainte += " /\\ lieux_p["+index+"]!="+indexLieu;
+          }
+        });
+        if(contrainteAAjouter) {
+          contrainte += ");\n";
+          console.log(contrainte);
+          this.puzzle.addString(contrainte);
+        }
+        contrainte="";
+        contrainteAAjouter = false;
+        p.non_object.forEach((o,index2)=>{
+          var indexObjet = this.objects.findIndex(obj => obj.name == o);
+          if (indexObjet==0) {
+            contrainteAAjouter = true;
+            contrainte += "constraint (objets_p["+index+"]!="+ indexObjet;
+          }else{
+            contrainte += " /\\ objets_p["+index+"]!="+indexObjet;
+          }
+        });
+        if(contrainteAAjouter) {
+          contrainte += ");\n";
+          console.log(contrainte);
+          this.puzzle.addString(contrainte);
+        }
+     });
+
+
+
+
+    this.objects.forEach((obj,index) => {
+      var contrainte = "";
+      var contrainteAAjouter = false;
+      obj.lieu.forEach((l, index2) => {
+        var indexLieu = this.places.findIndex(pl => pl.name == l);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (Lieux_o[" + index + "]==" + indexLieu;
+        } else {
+          contrainte += " \\/ Lieux_o[" + index + "]==" + indexLieu;
+        }
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+      contrainte = "";
+      contrainteAAjouter = false;
+      obj.non_lieu.forEach((l, index2) => {
+        var indexLieu = this.places.findIndex(pl => pl.name == l);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (Lieux_o[" + index + "]!=" + indexLieu;
+        } else {
+          contrainte += " /\\ Lieux_o[" + index + "]!=" + indexLieu;
+        }
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+    });
+
+    this.solution = this.puzzle.solveModel();
   }
   cellClicked(name: string, pc: string) {
     if(this.propagates[name + pc] == false || this.propagates[name + pc] == undefined) {

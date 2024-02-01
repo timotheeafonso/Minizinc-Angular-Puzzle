@@ -1,8 +1,17 @@
 content {
+  display: flex;
 }
 
 table {
   margin-inline: auto;
+  flex: 3;
+}
+
+ul {
+  flex: 1;
+  margin-inline: auto;
+  display: inline-list-item;
+  min-width: 300px;
 }
 
 table, td {
@@ -11,19 +20,11 @@ table, td {
 }
 
 td.clicked {
-  background-color: red;
-}
-
-td.clicked-twice {
   background-color: green;
 }
 
-td.annule {
-  background-color: white;
-}
-
-td.propagate {
-  background-color: orange;
+td.double-clicked {
+  background-color: red;
 }
 
 /* computer-puzzle.component.css */

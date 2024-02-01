@@ -22,9 +22,7 @@ export class Puzzle {
       }
     });
     solve.then(result => {
-      console.log("Stringify : " + JSON.stringify(result.solution));
-      // return JSON.stringify(result.solution);
-      this.solution = JSON.stringify(result.solution);
+      console.log("Solved !");
     });
     return solve;
   }

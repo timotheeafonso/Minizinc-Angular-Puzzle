@@ -2,34 +2,7 @@
 <div class="content">
 
   <ul>
-
-    <li data-clue-id="0">1. <input type="checkbox"> Of the 20-hundreds releases, neither of which was Jessica's choice, one opened the week
-      and
-      one closed the week.
-    </li>
-
-    <li data-clue-id="1">2. <input type="checkbox"> The latest of the 19-hundreds releases was shown at 30 minutes past the hour.</li>
-
-    <li data-clue-id="2">3. <input type="checkbox"> The releases shown before 8:00 pm were on consecutive days, as were the releases shown
-      after
-      8:00 pm.
-    </li>
-
-    <li data-clue-id="3">4. <input type="checkbox"> One of the men and one of the women had a showing before 8:00 pm, but neither was
-      mid-week.
-    </li>
-
-    <li data-clue-id="4">5. <input type="checkbox"> Mark, whose choice was Scarecrow, had a showing at a time of one hour and five minutes
-      after
-      that of Scarface.
-    </li>
-
-    <li data-clue-id="5">6. <input type="checkbox"> Neither Miss Farmer nor Miss Peters had a showing on an even-numbered day</li>
-
-    <li data-clue-id="6">7. <input type="checkbox"> 88 Minutes showed at a time both 40 minutes to the hour and 40 minutes after the Thursday
-      showing.
-    </li>
-
+    <li *ngFor="let evidence of this.evidences; index as i" #parameter (click)="putLineThrough(parameter)"> {{ i+1 }} {{ evidence }} </li>
   </ul>
 
   <table>
@@ -45,7 +18,7 @@
             <td class="title-vertical" colspan="6">Film</td>
           </tr>
           <tr>
-            <td *ngFor="let film of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+            <td *ngFor="let film of films"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -65,7 +38,7 @@
             <td class="title-vertical" colspan="5">Day</td>
           </tr>
           <tr>
-            <td *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+            <td *ngFor="let day of days"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -85,7 +58,7 @@
             <td class="title-vertical" colspan="5">Time</td>
           </tr>
           <tr>
-            <td *ngFor="let time of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']"
+            <td *ngFor="let time of times"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -114,7 +87,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let film of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+          <tr *ngFor="let film of people">
             <td class="js-item horizontal-text-item">{{ film }}</td>
           </tr>
           </tbody>
@@ -124,12 +97,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
+          <tr *ngFor="let row of people">
             <td class="cell"
-                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>
@@ -142,12 +114,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
-            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+          <tr *ngFor="let row of people">
+            <td class="cell" *ngFor="let col of days"
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>
@@ -160,11 +131,10 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['Jessica','Laurie', 'Mark', 'Mary', 'Sally']">
-            <td class="cell" *ngFor="let col of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']"
+          <tr *ngFor="let row of people">
+            <td class="cell" *ngFor="let col of times"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>
@@ -189,7 +159,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let p of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
+          <tr *ngFor="let p of times">
             <td class="js-item horizontal-text-item">{{ p }}</td>
           </tr>
           </tbody>
@@ -199,12 +169,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
+          <tr *ngFor="let row of times">
             <td class="cell"
-                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>
@@ -217,12 +186,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45']">
-            <td class="cell" *ngFor="let col of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+          <tr *ngFor="let row of times">
+            <td class="cell" *ngFor="let col of days"
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>
@@ -247,7 +215,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']">
+          <tr *ngFor="let day of days">
             <td class="js-item horizontal-text-item">{{ day }}</td>
           </tr>
           </tbody>
@@ -257,12 +225,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']">
+          <tr *ngFor="let row of days">
             <td class="cell"
-                *ngFor="let col of ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit']"
+                *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                (dblclick)="cellDoubleClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
               <span>&nbsp;</span>
             </td>

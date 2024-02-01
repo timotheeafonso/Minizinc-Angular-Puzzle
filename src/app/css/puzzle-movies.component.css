@@ -73,3 +73,8 @@ td.double-clicked {
   border-image: var(--red-to-pink-to-purple-vertical-gradient) 1;
 }
 
+.lineThrough {
+  text-decoration:line-through;
+  text-decoration-color: #bbbbbb;
+  color: #bbbbbb;
+}

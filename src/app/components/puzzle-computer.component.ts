@@ -15,7 +15,6 @@ import {PuzzleComputer} from "../models/puzzle-computer";
   styleUrl: '../css/puzzle-computer.component.css'
 })
 
-
 export class PuzzleComputerComponent {
   public solution: any;
   private puzzle: any;
@@ -32,7 +31,11 @@ export class PuzzleComputerComponent {
   cellClicked(name: string, pc: string) {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
-    console.log(this.solution);
+    if(this.solution["__zone_symbol__state"]) {
+      console.log(JSON.stringify(this.solution["__zone_symbol__value"].solution.output.json));
+    } else {
+      console.log("solving");
+    }
   }
 
   cellDoubleClicked(name: string, pc: string) {

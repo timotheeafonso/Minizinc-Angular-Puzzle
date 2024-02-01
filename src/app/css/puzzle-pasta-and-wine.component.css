@@ -1,27 +1,22 @@
-.content {
-  align-items: center;
-  display: grid;
-  grid-template-columns: 6fr 4fr;
-  margin-inline: auto;
-  grid-gap: 20px 20px;
-  grid-auto-rows: minmax(auto, auto);
+content {
+  display: flex;
 }
 
 table {
   margin-inline: auto;
-  align-self: center;
-  justify-self: center;
-}
-
-.evidences {
-  align-self: center;
-  justify-self: center;
+  flex: 3;
 }
 
 ul {
-  min-width: 400px;
+  margin-inline: auto;
+  overflow-y: auto;
+  height: 200px;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0px 20px;
+  grid-auto-rows: minmax(auto, auto);
 }
-
 
 table, td {
   text-align: center;
@@ -29,19 +24,11 @@ table, td {
 }
 
 td.clicked {
-  background-color: red;
-}
-
-td.clicked-twice {
   background-color: green;
 }
 
-td.annule {
-  background-color: white;
-}
-
-td.propagate {
-  background-color: orange;
+td.double-clicked {
+  background-color: red;
 }
 
 /* computer-puzzle.component.css */

@@ -15,8 +15,8 @@
                 @for (item of [
                     {title: 'Puzzle Computerz', link: '/computer-puzzle'},
                     {title: 'Puzzle Filmz', link: '/movies-puzzle'},
-                    {title: 'Puzzle Pazta & Winez', link: '/pastaAndWine-puzzle'},
                     {title: 'Créer puzzle', link: '/create-puzzle'},
+                    {title: 'Puzzle Pazta & Winez', link: '/pasta-and-wine-puzzle'},
                 ]; track item.title) {
                     <a class="pill" [routerLink]="[item.link]">
                         <span>{{ item.title }}</span>

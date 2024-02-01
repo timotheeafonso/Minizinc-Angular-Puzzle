@@ -1,5 +1,6 @@
 <!-- computer-puzzle.component.html -->
 <div class="content">
+
   <table>
     <tbody>
 
@@ -13,7 +14,7 @@
             <td class="title-vertical" colspan="6">Processor</td>
           </tr>
           <tr>
-            <td *ngFor="let speed of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+            <td *ngFor="let speed of processor"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -33,7 +34,7 @@
             <td class="title-vertical" colspan="5">Hard Disk</td>
           </tr>
           <tr>
-            <td *ngFor="let capacity of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']"
+            <td *ngFor="let capacity of disk"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -53,7 +54,7 @@
             <td class="title-vertical" colspan="5">Price</td>
           </tr>
           <tr>
-            <td *ngFor="let price of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']"
+            <td *ngFor="let price of price"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
@@ -82,7 +83,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let size of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
+          <tr *ngFor="let size of monitor">
             <td class="js-item horizontal-text-item">{{ size }}</td>
           </tr>
           </tbody>
@@ -92,8 +93,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+          <tr *ngFor="let row of monitor">
+            <td class="cell" *ngFor="let col of processor"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
@@ -108,8 +109,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-            <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
+          <tr *ngFor="let row of monitor">
+            <td class="cell" *ngFor="let col of disk" [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
@@ -124,9 +125,10 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['13\'','15\'', '15.6\'', '21.5\'', '27\'']">
-            <td class="cell" *ngFor="let col of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']"
-                [attr.data-x]="col" [attr.data-y]="row"
+          <tr *ngFor="let row of monitor">
+            <td class="cell" *ngFor="let col of price"
+                [attr.data-x]="col"
+                [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
@@ -152,7 +154,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let p of ['$ 699,00','$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
+          <tr *ngFor="let p of price">
             <td class="js-item horizontal-text-item">{{ p }}</td>
           </tr>
           </tbody>
@@ -162,8 +164,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+          <tr *ngFor="let row of price">
+            <td class="cell" *ngFor="let col of processor"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
@@ -178,8 +180,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['$ 699,00', '$ 999,00', '$ 1.149,00', '$ 1.349,00', '$ 1.649,00']">
-            <td class="cell" *ngFor="let col of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']" [attr.data-x]="col"
+          <tr *ngFor="let row of price">
+            <td class="cell" *ngFor="let col of disk" [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
@@ -206,7 +208,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let hdd of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
+          <tr *ngFor="let hdd of disk">
             <td class="js-item horizontal-text-item">{{ hdd }}</td>
           </tr>
           </tbody>
@@ -216,8 +218,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of ['250 Gb', '320 Gb', '500 Gb', '750 Gb', '1024 Gb']">
-            <td class="cell" *ngFor="let col of ['2.0 MHz', '2.3 MHz', '2.5 MHz', '2.7 MHz', '3.1 MHz']"
+          <tr *ngFor="let row of disk">
+            <td class="cell" *ngFor="let col of processor"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
@@ -231,5 +233,13 @@
 
     </tbody>
   </table>
+
+  <div class="evidences">
+    <ul>
+      <li *ngFor="let evidence of this.evidences; index as i" #parameter
+          (click)="putLineThrough(parameter)"> {{ i + 1 }} {{ evidence }}
+      </li>
+    </ul>
+  </div>
 
 </div>

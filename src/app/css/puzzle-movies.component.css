@@ -1,22 +1,34 @@
-content {
-  display: flex;
+.content {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  margin-inline: auto;
+  grid-gap: 20px 20px;
+  grid-auto-rows: minmax(auto, auto);
 }
 
 table {
   margin-inline: auto;
-  flex: 3;
+  align-self: center;
+  justify-self: center;
+}
+
+.evidences {
+  align-self: center;
+  justify-self: center;
 }
 
 ul {
-  flex: 1;
-  margin-inline: auto;
-  display: inline-list-item;
-  min-width: 300px;
+  min-width: 400px;
+}
+
+li {
+  width: auto;
 }
 
 table, td {
   text-align: center;
-  border-collapse: collapse;
+  /*border-collapse: collapse;*/
 }
 
 td.clicked {
@@ -30,7 +42,7 @@ td.double-clicked {
 /* computer-puzzle.component.css */
 .top-table {
   width: 100%; /* Utilise la largeur complète du conteneur parent */
-  border-collapse: collapse; /* Fusionne les bordures des cellules */
+  /*border-collapse: collapse; !* Fusionne les bordures des cellules *!*/
 }
 
 .js-item {

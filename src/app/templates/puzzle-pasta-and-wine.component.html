@@ -1,6 +1,12 @@
 <!-- movies-puzzle.component.html -->
 <div class="content">
 
+  <ul>
+    <li *ngFor="let evidence of this.evidences;" #parameter
+        (click)="putLineThrough(parameter)"> {{ evidence }}
+    </li>
+  </ul>
+
   <table>
     <tbody>
 
@@ -11,14 +17,14 @@
         <table class="top-table">
           <tbody>
           <tr>
-            <td class="title-vertical" colspan="6">Film</td>
+            <td class="title-vertical" colspan="6">Shirt</td>
           </tr>
           <tr>
-            <td *ngFor="let film of films"
+            <td *ngFor="let shirt of shirts"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  {{ film }}
+                  {{ shirt }}
                 </div>
               </div>
             </td>
@@ -31,14 +37,14 @@
         <table class="top-table">
           <tbody>
           <tr>
-            <td class="title-vertical" colspan="5">Day</td>
+            <td class="title-vertical" colspan="5">Name</td>
           </tr>
           <tr>
-            <td *ngFor="let day of days"
+            <td *ngFor="let name of names"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  {{ day }}
+                  {{ name }}
                 </div>
               </div>
             </td>
@@ -51,14 +57,74 @@
         <table class="top-table">
           <tbody>
           <tr>
-            <td class="title-vertical" colspan="5">Time</td>
+            <td class="title-vertical" colspan="5">Surname</td>
           </tr>
           <tr>
-            <td *ngFor="let time of times"
+            <td *ngFor="let surname of surnames"
                 class="js-item vertical-text-item">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  {{ time }}
+                  {{ surname }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Pasta</td>
+          </tr>
+          <tr>
+            <td *ngFor="let pasta of pastas"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ pasta }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Wine</td>
+          </tr>
+          <tr>
+            <td *ngFor="let wine of wines"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ wine }}
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="top-table">
+          <tbody>
+          <tr>
+            <td class="title-vertical" colspan="5">Age</td>
+          </tr>
+          <tr>
+            <td *ngFor="let age of ages"
+                class="js-item vertical-text-item">
+              <div class="vertical-text">
+                <div class="vertical-text-inner">
+                  {{ age }}
                 </div>
               </div>
             </td>
@@ -78,13 +144,13 @@
             <td class="title-horizontal" rowspan="6">
               <div class="vertical-text">
                 <div class="vertical-text-inner">
-                  Name
+                  Women
                 </div>
               </div>
             </td>
           </tr>
-          <tr *ngFor="let film of people">
-            <td class="js-item horizontal-text-item">{{ film }}</td>
+          <tr *ngFor="let women of womens">
+            <td class="js-item horizontal-text-item">{{ women }}</td>
           </tr>
           </tbody>
         </table>
@@ -93,9 +159,9 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of people">
+          <tr *ngFor="let row of womens">
             <td class="cell"
-                *ngFor="let col of films"
+                *ngFor="let col of shirts"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
@@ -110,8 +176,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of people">
-            <td class="cell" *ngFor="let col of days"
+          <tr *ngFor="let row of womens">
+            <td class="cell" *ngFor="let col of names"
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
@@ -127,8 +193,8 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of people">
-            <td class="cell" *ngFor="let col of times"
+          <tr *ngFor="let row of womens">
+            <td class="cell" *ngFor="let col of surnames"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
@@ -139,91 +205,11 @@
         </table>
       </td>
 
-    </tr>
-
-    <tr>
-
-      <td>
-        <table class="side-table">
-          <tbody>
-          <tr>
-            <td class="title-horizontal" rowspan="6">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  Time
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr *ngFor="let p of times">
-            <td class="js-item horizontal-text-item">{{ p }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of times">
-            <td class="cell"
-                *ngFor="let col of films"
-                [attr.data-x]="col" [attr.data-y]="row"
-                (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-              <span>&nbsp;</span>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="">
-          <tbody>
-          <tr *ngFor="let row of times">
-            <td class="cell" *ngFor="let col of days"
-                [attr.data-x]="col"
-                [attr.data-y]="row"
-                (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
-              <span>&nbsp;</span>
-            </td>
-
-          </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-
-    <tr>
-
-      <td>
-        <table class="side-table">
-          <tbody>
-          <tr>
-            <td class="title-horizontal" rowspan="6">
-              <div class="vertical-text">
-                <div class="vertical-text-inner">
-                  Day
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr *ngFor="let day of days">
-            <td class="js-item horizontal-text-item">{{ day }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </td>
-
-      <td>
-        <table class="">
-          <tbody>
-          <tr *ngFor="let row of days">
-            <td class="cell"
-                *ngFor="let col of films"
+          <tr *ngFor="let row of womens">
+            <td class="cell" *ngFor="let col of pastas"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
                 [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
@@ -233,19 +219,44 @@
           </tbody>
         </table>
       </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of womens">
+            <td class="cell" *ngFor="let col of wines"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
+      <td>
+        <table class="">
+          <tbody>
+          <tr *ngFor="let row of womens">
+            <td class="cell" *ngFor="let col of ages"
+                [attr.data-x]="col" [attr.data-y]="row"
+                (click)="cellClicked(row, col)"
+                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+              <span>&nbsp;</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+
     </tr>
 
     </tbody>
   </table>
 
-  <div class="evidences">
-    <ul>
-      <li *ngFor="let evidence of this.evidences; index as i" #parameter
-          (click)="putLineThrough(parameter)"> {{ i + 1 }} {{ evidence }}
-      </li>
-    </ul>
-  </div>
-
 </div>
 
-<div></div>
+<div>
+
+</div>

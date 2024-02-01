@@ -1,10 +1,6 @@
 <!-- computer-puzzle.component.html -->
 <div class="content">
 
-  <ul>
-    <li *ngFor="let evidence of this.evidences; index as i" #parameter (click)="putLineThrough(parameter)"> {{ i+1 }} {{ evidence }} </li>
-  </ul>
-
   <table>
     <tbody>
 
@@ -237,5 +233,13 @@
 
     </tbody>
   </table>
+
+  <div class="evidences">
+    <ul>
+      <li *ngFor="let evidence of this.evidences; index as i" #parameter
+          (click)="putLineThrough(parameter)"> {{ i + 1 }} {{ evidence }}
+      </li>
+    </ul>
+  </div>
 
 </div>

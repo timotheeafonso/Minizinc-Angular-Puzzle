@@ -31,14 +31,14 @@
 
   <div class="form-style-5" *ngIf="showContraintes">
     <form (ngSubmit)="onSubmit()">
-        <legend><span class="number">1</span> Contraintes</legend>
+        <legend><span class="number">4</span> Contraintes</legend>
         <div class="contraintes" *ngFor="let select of selects; let i = index">
-          <select name="select1{{i}}" [(ngModel)]="select.var1">
+          <select name="select1{{i}}" [(ngModel)]="select.var1" (change)="toggleObjetsSelect(i)">
               <option value=""></option>
               <optgroup label="Personnes">
                 <option *ngFor="let p of peoples">{{p.name}}</option>
               </optgroup>
-              <optgroup label="Objets">
+              <optgroup label="Objets" *ngIf="select.show_obj1">
                 <option *ngFor="let o of objects">{{o.name}}</option>
               </optgroup>
           </select>
@@ -47,12 +47,12 @@
             <option  value="+">+</option>
             <option value="-">-</option>
           </select>
-          <select name="select2{{i}}"  [(ngModel)]="select.var2">
+          <select name="select2{{i}}"  [(ngModel)]="select.var2" (change)="toggleObjetsSelect(i)">
             <option value=""></option>
             <optgroup label="Lieux">
               <option *ngFor="let pl of places">{{pl.name}}</option>
             </optgroup>
-            <optgroup label="Objets">
+            <optgroup label="Objets" *ngIf="select.show_obj2">
               <option *ngFor="let o of objects">{{o.name}}</option>
             </optgroup>
           </select>

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
   ],
   templateUrl: '../templates/create-puzzle.component.html',
   styleUrl: '../css/create-puzzle.component.css'
+
 })
 export class CreatePuzzleComponent {
   clickedOnce: { [key: string]: boolean } = {};
@@ -41,10 +42,10 @@ export class CreatePuzzleComponent {
   showInitForm : boolean = true;
   showContraintes: boolean = false;
   showTable: boolean = false;
-  selects: { var1: string, operateur: string ,var2: string}[] = [{var1:'',operateur:'',var2:''}];
-
+  selects: { var1: string, operateur: string ,var2: string,show_obj1 : boolean ,show_obj2 :boolean}[] = [{var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true}];
 
   onSubmit() {
+
     this.selects.forEach((value : {var1: string; operateur: string;var2: string; }) : void => {
       //const [var1, var2] = value.split(':');
       const person = this.peoples.find(person => person.name === value.var1);
@@ -86,6 +87,7 @@ export class CreatePuzzleComponent {
     console.log(this.peoples);
     console.log(this.places);
     console.log(this.objects);
+
   }
 
   onSubmitNewPuzzle() {
@@ -105,11 +107,30 @@ export class CreatePuzzleComponent {
       {name: '', object: [], personne: [], non_object: [], non_personne: []}
     ];
 
-    this.selects=[{var1:'',operateur:'',var2:''}];
+    this.selects=[{var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true}];
   }
   onSubmitAdd(type : string){
+    this.selects.push({var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true});
+  }
 
-    this.selects.push({var1:'',operateur:'',var2:''});
+  toggleObjetsSelect(index: number) {
+    var var1_selected = this.selects[index].var1;
+    if (var1_selected != '') {
+      if (this.objects.find(obj => obj.name == var1_selected)) {
+        this.selects[index].show_obj2 = false;
+      } else {
+        this.selects[index].show_obj2 = true;
+      }
+    }
+
+    var var2_selected = this.selects[index].var2;
+    if (var2_selected != '') {
+      if (this.objects.find(obj => obj.name == var2_selected)) {
+        this.selects[index].show_obj1 = false;
+      } else {
+        this.selects[index].show_obj1 = true;
+      }
+    }
   }
   cellClicked(name: string, pc: string) {
     if(this.propagates[name + pc] == false || this.propagates[name + pc] == undefined) {
@@ -148,24 +169,16 @@ export class CreatePuzzleComponent {
 
     var1.forEach((v1 : string) : void => {
       if (this.clickedTwice[name+pc]) {
-        //this.cellClickedOnce(v1, pc);
         this.cellPropagate(v1,pc)
       } else if(this.annule[name+pc]){
-        //if(this.clickedOnce[v1+pc]) {
         this.cellReversePropagate(v1,pc)
-        //this.cellAnnule(v1, pc);
-        //}
       }
     })
     var2.forEach((v2 : string) : void => {
       if (this.clickedTwice[name+pc]) {
-        //this.cellClickedOnce(name, v2);
         this.cellPropagate(name,v2);
       }else if(this.annule[name+pc]) {
-        //if(this.clickedOnce[name+v2]) {
         this.cellReversePropagate(name,v2);
-        //this.cellAnnule(name, v2);
-        //}
       }
     })
 
@@ -208,7 +221,6 @@ export class CreatePuzzleComponent {
       }
     }
   }
-
   protected readonly Object = Object;
 }
 

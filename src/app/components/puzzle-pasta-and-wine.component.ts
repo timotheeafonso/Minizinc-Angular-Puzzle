@@ -194,7 +194,8 @@ export class PuzzlePastaAndWineComponent {
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = false;
     if (this.solution["__zone_symbol__state"]) {
-      console.log(JSON.stringify(this.solution["__zone_symbol__value"].solution.output.json));
+      // console.log(this.solution["__zone_symbol__value"].solution.output.json);
+      console.log(this.solution["__zone_symbol__value"].solution.output.default);
     } else {
       console.log("solving ...");
     }

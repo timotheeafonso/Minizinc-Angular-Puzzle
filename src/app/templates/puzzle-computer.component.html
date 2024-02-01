@@ -242,4 +242,8 @@
     </ul>
   </div>
 
+
+  <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Computerz" content="Bravo !! Vous avez trouvé la solution au Computerz !">
+  </app-modal-success>
+
 </div>

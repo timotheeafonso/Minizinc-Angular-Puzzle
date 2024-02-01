@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NgClass, NgForOf} from "@angular/common";
-import {PuzzleComputer} from "../models/puzzle-computer";
 import {PuzzleMovies} from "../models/puzzle-movies";
 
 @Component({
@@ -141,7 +140,8 @@ export class PuzzleMoviesComponent {
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = false;
     if (this.solution["__zone_symbol__state"]) {
-      console.log(JSON.stringify(this.solution["__zone_symbol__value"].solution.output.json));
+      // console.log(this.solution["__zone_symbol__value"].solution.output.json);
+      console.log(this.solution["__zone_symbol__value"].solution.output.default);
     } else {
       console.log("solving ...");
     }
@@ -187,6 +187,10 @@ export class PuzzleMoviesComponent {
     } else {
       element.classList.add('lineThrough')
     }
+  }
+
+  showSuccessModal() {
+
   }
 
 }

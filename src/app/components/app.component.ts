@@ -1,15 +1,15 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {PuzzleFactoryService} from "../models/factories/puzzle-factory-service";
 import * as MiniZinc from "minizinc";
 import {RouterModule} from '@angular/router';
+import {ModalSuccessComponent} from "./modal-success.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule],
+  imports: [CommonModule, RouterOutlet, RouterModule, ModalSuccessComponent],
   templateUrl: '../templates/app.component.html',
   styleUrl: '../css/app.component.css',
 })

@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {PuzzleComputer} from "../models/puzzle-computer";
 import {ModalSuccessComponent} from "./modal-success.component";
+import {PuzzleCreate} from "../models/puzzle-create";
 
 @Component({
   selector: 'app-puzzle-computer',
@@ -19,6 +20,7 @@ import {ModalSuccessComponent} from "./modal-success.component";
 export class PuzzleComputerComponent {
   public solution: any;
   private puzzle: any;
+  start : boolean = false;
   clickedOnce: { [key: string]: boolean } = {};
   clickedTwice: { [key: string]: boolean } = {};
   annule: { [key: string]: boolean } = {};
@@ -34,10 +36,74 @@ export class PuzzleComputerComponent {
     'The computer that has the 27\' screen doesn\'t have the 320 Gb hard drive. The 500 GB HD is included in the computer that has a more powerful processor and a larger size screen than the one which costs 699 euros (which doesn\'t include the 320 Gb HD).']
   @ViewChild(ModalSuccessComponent) modalSuccess: any;
   showModalSuccess = false;
+  showModalNotSucess = false;
+  current: { monitor: string, processor: string, disk: string,price: string}[] = [
+    { monitor: '13\'', processor: '', disk: '',price:''},
+    { monitor: '15\'', processor: '', disk: '',price:''},
+    { monitor: '15.6\'', processor: '', disk: '',price:''},
+    { monitor: '21.5\'', processor: '', disk: '',price:''},
+    { monitor: '27\'', processor: '', disk: '',price:''}
+  ];
+
+  objectif: { monitor: string, processor: string, disk: string,price: string}[] = [
+    { monitor: '13\'', processor: '', disk: '',price:''},
+    { monitor: '15\'', processor: '', disk: '',price:''},
+    { monitor: '15.6\'', processor: '', disk: '',price:''},
+    { monitor: '21.5\'', processor: '', disk: '',price:''},
+    { monitor: '27\'', processor: '', disk: '',price:''}
+  ];
+
 
   constructor() {
     this.puzzle = new PuzzleComputer();
     this.solution = this.puzzle.solveModel();
+
+
+    setTimeout(() => {
+      console.log(this.solution);
+      if (this.solution["__zone_symbol__value"].status == "ALL_SOLUTIONS") {
+        var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
+        strSol.forEach((monitor: string, index2: number) => {
+          var affectation = monitor.split(":");
+          affectation.forEach((val: any, index: number) => {
+            if (val != '') {
+              if (index == 2) {
+                if(val == '20'){
+                  val = '2.0 MHz';
+                }else if(val=='23'){
+                  val ='2.3 MHz';
+                }else if(val=='25'){
+                  val = '2.5 MHz';
+                }else if(val=='27'){
+                  val = '2.7 MHz';
+                }else if(val=='31'){
+                  val = '3.1 MHz';
+                }
+                this.objectif[index2].processor = val;
+              } else if (index == 3) {
+                val += ' Gb'
+                this.objectif[index2].disk = val;
+              } else if (index == 4) {
+                if(val == '699'){
+                  val = '$ 699,00';
+                }else if(val=='999'){
+                  val ='$ 999,00';
+                }else if(val=='1149'){
+                  val = '$ 1.149,00';
+                }else if(val=='1349'){
+                  val = '$ 1.349,00';
+                }else if(val=='1649'){
+                  val = '$ 1.649,00';
+                }
+                this.objectif[index2].price = val;
+              }
+            }
+          })
+        })
+      }
+      this.start = true;
+      console.log(this.objectif);
+    }, 30000);
   }
 
   cellClicked(name: string, pc: string) {
@@ -140,19 +206,43 @@ export class PuzzleComputerComponent {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = false;
-    if (this.solution["__zone_symbol__state"]) {
-      // console.log(this.solution["__zone_symbol__value"].solution.output.json);
-      // console.log(this.solution["__zone_symbol__value"].solution.output.default);
-      this.testSuccess();
-    } else {
-      console.log("solving ...");
-    }
   }
 
   cellClickedTwice(name: string, pc: string) {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = true;
     this.annule[name + pc] = false;
+
+    this.current.forEach((c)=>{
+      if(c.monitor == name){
+        if(this.processor.some((proc)=> proc == pc)){
+          c.processor = pc;
+        }else if(this.disk.some((d)=> d == pc)){
+          c.disk = pc;
+        }else if(this.price.some((pr)=> pr == pc)){
+          c.price = pc;
+        }
+      }
+    });
+    console.log("Solution courrente",this.current);
+    if(this.isComplet()){
+      var currentCopy :{ monitor: string, processor: string, disk: string,price: string}[] = [];
+      this.objectif.forEach((obj,index)=>{
+          var pcoreder = this.current.find((cur,index2)=> cur.monitor == obj.monitor )
+          if(pcoreder) {
+            currentCopy.push(pcoreder);
+          }
+      })
+      console.log(currentCopy);
+      if(JSON.stringify(currentCopy) === JSON.stringify(this.objectif)){
+        this.showModalSuccess = true;
+      }else{
+        this.showModalNotSucess = true;
+      }
+
+    }
+
+
   }
 
   cellAnnule(name: string, pc: string) {
@@ -227,6 +317,17 @@ export class PuzzleComputerComponent {
     //
     // }
     // this.showModalSuccess = true;
+  }
+
+  isComplet(): boolean {
+    let complet = true;
+    for (let element of this.current) {
+      if (element.disk === '' || element.price === '' || element.processor === '' || element.monitor === '') {
+        complet = false;
+        break;
+      }
+    }
+    return complet;
   }
 
 }

@@ -1,7 +1,9 @@
 <!-- computer-puzzle.component.html -->
 <div class="content">
-
-  <table>
+  <div *ngIf="start==false">
+    <p>Loading ...</p>
+  </div>
+  <table *ngIf="start">
     <tbody>
 
     <tr>
@@ -241,6 +243,7 @@
       </li>
     </ul>
   </div>
+  <app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Puzzle Computerz" content="Incorrect !">  </app-modal-success>
 
 
   <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Computerz" content="Bravo !! Vous avez trouvé la solution au Computerz !">

@@ -33,7 +33,12 @@ export class PuzzleComputer extends Puzzle {
     "\n" +
     "solve satisfy;\n" +
     "\n" +
-    "output [show(p) ++ \":\"++ show(monitors[p]) ++ \":\" ++ show(hard_disks[p])++\":\"++show(processors[p])++\":\"++show(prices[p])++ \"\\n\" | p in PC];";
+    "output [show(p) ++ \":\"++ show(monitors[p]) ++ \":\" ++ show(processors[p])++\":\"++show(hard_disks[p])++\":\"++show(prices[p])++ \"\\n\" | p in PC];";
+
+  public res = { ["13'"]:13, ["15'"]:15, ["15,6'"]:156, ["21,5'"]:215, ["27'"]:27}
+  public proc = {["2.0 MHz"]:20,["2.3 MHz"]:23,["2.5 MHz"]:25,["2.7 MHz"]:27,["3.1 MHz"]:31}
+  public hdd = {["250 Gb"]:250,["320 Gb"]:320,["500 Gb"]:500,["750 Gb"]:750,["1014 Gb"]:1024}
+  public price = {["$ 699,00"]:699,["$ 999,00"]:999,["$ 1.149,00"]:1149,["$ 1.349,00"]:1349,["$ 1.649,00"]:1649}
 
   constructor() {
     super(PuzzleComputer.puzzleName, PuzzleComputer.puzzleContent);

@@ -1,0 +1,256 @@
+<!-- create-puzzle.component.html -->
+<div class="content">
+  <div class="form-style-5" *ngIf="showInitForm">
+    <form>
+      <fieldset>
+        <legend><span class="number">1</span> Personnes</legend>
+        <div *ngFor="let person of peoples; let i = index">
+          <input type="text" [(ngModel)]="person.name" name="person{{ i }}"  placeholder="Nom {{ i+1 }}" required>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><span class="number">2</span> Objets</legend>
+        <div *ngFor="let object of objects; let i = index">
+          <input type="text" [(ngModel)]="object.name" name="object{{ i }}" placeholder="Objet {{ i+1 }}" required>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><span class="number">3</span> Lieux</legend>
+        <div *ngFor="let place of places; let i = index">
+          <input type="text" [(ngModel)]="place.name" name="place{{ i }}" placeholder="Lieux {{ i+1 }}" required="required">
+        </div>
+      </fieldset>
+      <input type="submit" (click)="showContraintes = true;showInitForm=false" value="Créer" />
+    </form>
+  </div>
+
+
+
+
+
+
+  <div class="form-style-5" *ngIf="showContraintes">
+    <form (ngSubmit)="onSubmit()">
+        <legend><span class="number">4</span> Contraintes</legend>
+        <div class="contraintes" *ngFor="let select of selects; let i = index">
+          <select name="select1{{i}}" [(ngModel)]="select.var1" (change)="toggleObjetsSelect(i)">
+              <option value=""></option>
+              <optgroup label="Personnes">
+                <option *ngFor="let p of peoples">{{p.name}}</option>
+              </optgroup>
+              <optgroup label="Objets" *ngIf="select.show_obj1">
+                <option *ngFor="let o of objects">{{o.name}}</option>
+              </optgroup>
+          </select>
+          <select  name="operateur{{i}}" [(ngModel)]="select.operateur">
+            <option value=""></option>
+            <option  value="+">+</option>
+            <option value="-">-</option>
+          </select>
+          <select name="select2{{i}}"  [(ngModel)]="select.var2" (change)="toggleObjetsSelect(i)">
+            <option value=""></option>
+            <optgroup label="Lieux">
+              <option *ngFor="let pl of places">{{pl.name}}</option>
+            </optgroup>
+            <optgroup label="Objets" *ngIf="select.show_obj2">
+              <option *ngFor="let o of objects">{{o.name}}</option>
+            </optgroup>
+          </select>
+        </div>
+
+
+      <input type="button" (click)="onSubmitAdd('nonAffectation')" value="+" />
+
+      <input type="submit" (click)="showTable = true; showContraintes = false; showInitForm = false; onSubmit()" value="Ajouter" />
+    </form>
+
+  </div>
+
+
+
+  <div class="form-style-5" *ngIf="showTable">
+    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="Créer un nouveau puzzle" />
+    <ul>
+      <ng-container *ngFor="let p of peoples;">
+        <ng-container *ngIf="p.object.length == 1;">
+          <li>{{p.name}} possède l'objet {{p.object[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.object.length == 2;">
+          <li>{{p.name}} possède soit l'objet {{p.object[0]}} soit l'objet {{p.object[1]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.lieu.length == 1">
+          <li >{{p.name}} est au lieux {{p.lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.lieu.length == 2">
+          <li >{{p.name}} est soit au lieux {{p.lieu[0]}} soit au lieux {{p.lieu[1]}}</li>
+        </ng-container>
+
+        <ng-container *ngIf="p.non_object.length == 1;">
+          <li>{{p.name}} ne possède pas l'objet {{p.non_object[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_object.length == 2;">
+          <li>{{p.name}} ne possède ni l'objet {{p.non_object[0]}} ni l'objet {{p.non_object[1]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_lieu.length == 1">
+          <li >{{p.name}} n'est pas au lieux {{p.non_lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="p.non_lieu.length == 2">
+          <li >{{p.name}} est ni au lieux {{p.non_lieu[0]}} ni au lieu {{p.non_lieu[1]}}</li>
+        </ng-container>
+      </ng-container>
+
+
+      <ng-container *ngFor="let obj of objects;">
+        <ng-container *ngIf="obj.lieu.length == 1">
+          <li >L'objet {{obj.name}} est au lieux {{obj.lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="obj.lieu.length == 2">
+          <li >L'objet {{obj.name}} est soit au lieux {{obj.lieu[0]}} soit au lieux {{obj.lieu[1]}}</li>
+        </ng-container>
+
+        <ng-container *ngIf="obj.non_lieu.length == 1">
+          <li >L'objet {{obj.name}} n'est pas au lieux {{obj.non_lieu[0]}}</li>
+        </ng-container>
+        <ng-container *ngIf="obj.non_lieu.length == 2">
+          <li >L'objet {{obj.name}} est ni au lieux {{obj.non_lieu[0]}} ni au lieux {{obj.non_lieu[1]}}</li>
+        </ng-container>
+      </ng-container>
+    </ul>
+
+    <table *ngIf="start">
+      <tbody>
+      <tr>
+        <td></td>
+        <td>
+          <table class="top-table">
+            <tbody>
+            <tr>
+              <td class="title-vertical" colspan="5">Objets</td>
+            </tr>
+            <tr>
+              <td *ngFor="let o of objects"
+                  class="js-item vertical-text-item">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    {{ o.name }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="top-table">
+            <tbody>
+            <tr>
+              <td class="title-vertical" colspan="5">Lieux</td>
+            </tr>
+            <tr>
+              <td *ngFor="let pl of places"
+                  class="js-item vertical-text-item">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    {{ pl.name }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="side-table">
+            <tbody>
+            <tr>
+              <td class="title-horizontal" rowspan="6">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    Personnes
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let p of peoples">
+              <td class="js-item horizontal-text-item">{{ p.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of peoples">
+              <td class="cell" *ngFor="let col of objects"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of peoples">
+              <td class="cell" *ngFor="let col of places"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="side-table">
+            <tbody>
+            <tr>
+              <td class="title-horizontal" rowspan="6">
+                <div class="vertical-text">
+                  <div class="vertical-text-inner">
+                    Lieux
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let pl of places">
+              <td class="js-item horizontal-text-item">{{ pl.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table class="">
+            <tbody>
+            <tr *ngFor="let row of places">
+              <td class="cell" *ngFor="let col of objects"
+                  [attr.data-x]="col" [attr.data-y]="row"
+                  (click)="cellClicked(row.name, col.name)"
+                  [ngClass]="{'clicked': clickedOnce[row.name + col.name],'clicked-twice': clickedTwice[row.name + col.name],'annule' : annule[row.name + col.name],'propagate' : propagates[row.name + col.name]}">
+                <span>&nbsp;</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="unsat">
+      <input id="unsat" type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="UNSATISFIABLE" />
+    </div>
+  </div>
+  <app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Custom Puzzle" content="Incorrect !">  </app-modal-success>
+  <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Custom Puzzle" content="Bravo !! Vous avez trouvé la solution au Computerz !">  </app-modal-success>
+
+</div>
+
+

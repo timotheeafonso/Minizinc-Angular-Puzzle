@@ -65,8 +65,10 @@ export class CreatePuzzleComponent {
   selects: { var1: string, operateur: string ,var2: string,show_obj1 : boolean ,show_obj2 :boolean}[] = [{var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true}];
   @ViewChild(ModalSuccessComponent) modalSuccess: any;
   showModalSuccess = false;
+  showModalNotSucess = false;
   listContraintes: string[] = [];
-
+  start: boolean = false;
+  unsat: boolean = false;
   /**************************************************************************  Creation puzzle  **************************************************************************/
   onSubmit() {
 
@@ -132,7 +134,15 @@ export class CreatePuzzleComponent {
       {name: '', object: [], personne: [], non_object: [], non_personne: []}
     ];
 
+    this.clickedOnce= {};
+    this.clickedTwice={};
+    this.annule = {};
+    this.propagates = {};
+    this.nb_propagates = {};
     this.selects=[{var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true}];
+    this.listContraintes =  [];
+    this.start = false;
+    this.unsat=false;
   }
   onSubmitAdd(type : string){
     this.selects.push({var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true});
@@ -272,7 +282,9 @@ export class CreatePuzzleComponent {
 
     this.solution = this.puzzle.solveModel();
     setTimeout(() => {
-      if (this.solution["__zone_symbol__value"]) {
+      console.log(this.solution);
+
+      if (this.solution["__zone_symbol__value"].status == "ALL_SOLUTIONS") {
         var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
         strSol.forEach((personne: string, index2: number) => {
           var affectation = personne.split(":");
@@ -292,7 +304,11 @@ export class CreatePuzzleComponent {
           this.current[index].personne=obj.personne;
         });
         console.log("Solution",this.objectif);
-      };
+        this.start=true;
+      }else if(this.solution["__zone_symbol__value"].status == "UNSATISFIABLE"){
+        this.unsat=true;
+      }
+
     }, 5000);
 
   }
@@ -386,6 +402,8 @@ export class CreatePuzzleComponent {
         console.log("res",solutionTest);
         if(solutionTest["__zone_symbol__value"].status == "ALL_SOLUTIONS"){
           this.showModalSuccess = true;
+        }else if(solutionTest["__zone_symbol__value"].status == "UNSATISFIABLE"){
+          this.showModalNotSucess = true;
         }
       }, 5000);
     }

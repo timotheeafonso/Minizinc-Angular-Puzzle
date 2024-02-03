@@ -69,6 +69,7 @@
 
 
   <div class="form-style-5" *ngIf="showTable">
+    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="Créer un nouveau puzzle" />
     <ul>
       <ng-container *ngFor="let p of peoples;">
         <ng-container *ngIf="p.object.length == 1;">
@@ -116,8 +117,7 @@
       </ng-container>
     </ul>
 
-    <input type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="Créer un nouveau puzzle" />
-    <table >
+    <table *ngIf="start">
       <tbody>
       <tr>
         <td></td>
@@ -244,8 +244,12 @@
       </tr>
       </tbody>
     </table>
+    <div *ngIf="unsat">
+      <input id="unsat" type="submit" (click)="showInitForm = true;showContraintes=false; showTable = false; onSubmitNewPuzzle()" value="UNSATISFIABLE" />
+    </div>
   </div>
-  <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Computerz" content="Bravo !! Vous avez trouvé la solution au Computerz !">  </app-modal-success>
+  <app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Custom Puzzle" content="Incorrect !">  </app-modal-success>
+  <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Custom Puzzle" content="Bravo !! Vous avez trouvé la solution au Computerz !">  </app-modal-success>
 
 </div>
 

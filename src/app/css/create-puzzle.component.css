@@ -188,3 +188,9 @@ td.propagate {
   background: #109177;
 }
 
+#unsat{
+  background: #ad2856;
+  border: 1px solid #ad2856;
+
+}
+

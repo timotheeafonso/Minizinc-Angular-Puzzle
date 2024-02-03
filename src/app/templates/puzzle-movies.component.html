@@ -98,7 +98,7 @@
                 *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -115,7 +115,7 @@
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -131,7 +131,7 @@
             <td class="cell" *ngFor="let col of times"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -170,7 +170,7 @@
                 *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -187,7 +187,7 @@
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -226,7 +226,7 @@
                 *ngFor="let col of films"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>

@@ -141,7 +141,7 @@ export class PuzzleMoviesComponent {
     this.annule[name + pc] = false;
     if (this.solution["__zone_symbol__state"]) {
       // console.log(this.solution["__zone_symbol__value"].solution.output.json);
-      console.log(this.solution["__zone_symbol__value"].solution.output.default);
+      // console.log(this.solution["__zone_symbol__value"].solution.output.default);
     } else {
       console.log("solving ...");
     }
@@ -166,7 +166,7 @@ export class PuzzleMoviesComponent {
       if (this.nb_propagates[name + pc] == undefined)
         this.nb_propagates[name + pc] = 1;
       else this.nb_propagates[name + pc] += 1;
-      console.log(this.nb_propagates[name + pc]);
+      // console.log(this.nb_propagates[name + pc]);
     }
   }
 
@@ -182,7 +182,7 @@ export class PuzzleMoviesComponent {
   }
 
   putLineThrough(element: HTMLElement) {
-    if(element.classList.contains('lineThrough')) {
+    if (element.classList.contains('lineThrough')) {
       element.classList.remove('lineThrough')
     } else {
       element.classList.add('lineThrough')

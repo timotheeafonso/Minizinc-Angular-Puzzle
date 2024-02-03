@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import {NgClass, NgForOf} from "@angular/common";
+import {Component, ViewChild} from '@angular/core';
+import {NgClass, NgForOf,NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import {PuzzleComputer} from "../models/puzzle-computer";
 import {PuzzleCreate} from "../models/puzzle-create";
+import {waitForAsync} from "@angular/core/testing";
+import {ModalSuccessComponent} from "./modal-success.component";
 
 @Component({
   selector: 'app-create-puzzle',
@@ -11,13 +13,15 @@ import {PuzzleCreate} from "../models/puzzle-create";
   imports: [
     NgClass,
     NgForOf,
+    NgIf,
     FormsModule,
-    CommonModule
+    CommonModule,
+    ModalSuccessComponent
   ],
   templateUrl: '../templates/create-puzzle.component.html',
   styleUrl: '../css/create-puzzle.component.css'
-
 })
+
 export class CreatePuzzleComponent {
   public solution: any;
   private puzzle: any;
@@ -43,15 +47,31 @@ export class CreatePuzzleComponent {
     { name: '', object: [], personne: [], non_object: [], non_personne: []}
   ];
 
+  objectif: { personne: string, object: string, place: string}[] = [
+    { personne: '', object: '', place: ''},
+    { personne: '', object: '', place: ''},
+    { personne: '', object: '', place: ''}
+  ];
+
+  current: { personne: string, object: string, place: string}[] = [
+    { personne: '', object: '', place: ''},
+    { personne: '', object: '', place: ''},
+    { personne: '', object: '', place: ''}
+  ];
+
   showInitForm : boolean = true;
   showContraintes: boolean = false;
   showTable: boolean = false;
   selects: { var1: string, operateur: string ,var2: string,show_obj1 : boolean ,show_obj2 :boolean}[] = [{var1:'',operateur:'',var2:'',show_obj1 : true,show_obj2 :true}];
+  @ViewChild(ModalSuccessComponent) modalSuccess: any;
+  showModalSuccess = false;
+  listContraintes: string[] = [];
 
+  /**************************************************************************  Creation puzzle  **************************************************************************/
   onSubmit() {
 
     this.selects.forEach((value : {var1: string; operateur: string;var2: string; }) : void => {
-      //const [var1, var2] = value.split(':');
+
       const person = this.peoples.find(person => person.name === value.var1);
       if (person) {
         const object = this.objects.find(obj => obj.name === value.var2);
@@ -87,13 +107,12 @@ export class CreatePuzzleComponent {
         }
       }
     });
-    console.log(this.selects);
-    console.log(this.peoples);
-    console.log(this.places);
-    console.log(this.objects);
+    console.log("contrainte selectione ",this.selects);
+    console.log("personne ",this.peoples);
+    console.log("lieu ",this.places);
+    console.log("objet ", this.objects);
 
     this.createMinizincPuzzle();
-
   }
 
   onSubmitNewPuzzle() {
@@ -139,94 +158,97 @@ export class CreatePuzzleComponent {
     }
   }
 
-  createMinizincPuzzle(){
+  createMinizincPuzzle() {
     this.puzzle = new PuzzleCreate();
 
-    this.peoples.forEach((p,index) => {
-       var contrainte="";
-       var contrainteAAjouter = false;
-       p.lieu.forEach((l,index2)=>{
-         var indexLieu = this.places.findIndex(pl => pl.name == l);
-         if (index2==0) {
-           contrainteAAjouter = true;
-           contrainte += "constraint (lieux_p["+index+"]=="+ indexLieu;
-         }else{
-           contrainte += " \\/ lieux_p["+index+"]=="+indexLieu;
-         }
-       });
-       if(contrainteAAjouter) {
-         contrainte += ");\n";
-         console.log(contrainte);
-         this.puzzle.addString(contrainte);
-       }
-       contrainte="";
-       contrainteAAjouter = false;
-        p.object.forEach((o,index2)=>{
-          var indexObjet = this.objects.findIndex(obj => obj.name == o);
-          if (indexObjet==0) {
-            contrainteAAjouter = true;
-            contrainte += "constraint (objets_p["+index+"]=="+ indexObjet;
-          }else{
-            contrainte += " \\/ objets_p["+index+"]=="+indexObjet;
-          }
-        });
-        if(contrainteAAjouter) {
-          contrainte += ");\n";
-          console.log(contrainte);
-          this.puzzle.addString(contrainte);
+    this.peoples.forEach((p, index) => {
+      var contrainte = "";
+      var contrainteAAjouter = false;
+      p.lieu.forEach((l, index2) => {
+        var indexLieu = this.places.findIndex(pl => pl.name == l);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (lieux_p[" + index + "]==" + indexLieu;
+        } else {
+          contrainte += " \\/ lieux_p[" + index + "]==" + indexLieu;
         }
-        contrainte="";
-        contrainteAAjouter = false;
-        p.non_lieu.forEach((l,index2)=>{
-          var indexLieu = this.places.findIndex(pl => pl.name == l);
-          if (index2==0) {
-            contrainteAAjouter = true;
-            contrainte += "constraint (lieux_p["+index+"]!="+ indexLieu;
-          }else{
-            contrainte += " /\\ lieux_p["+index+"]!="+indexLieu;
-          }
-        });
-        if(contrainteAAjouter) {
-          contrainte += ");\n";
-          console.log(contrainte);
-          this.puzzle.addString(contrainte);
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.listContraintes.push(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+      contrainte = "";
+      contrainteAAjouter = false;
+      p.object.forEach((o, index2) => {
+        var indexObjet = this.objects.findIndex(obj => obj.name == o);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (objets_p[" + index + "]==" + indexObjet;
+        } else {
+          contrainte += " \\/ objets_p[" + index + "]==" + indexObjet;
         }
-        contrainte="";
-        contrainteAAjouter = false;
-        p.non_object.forEach((o,index2)=>{
-          var indexObjet = this.objects.findIndex(obj => obj.name == o);
-          if (indexObjet==0) {
-            contrainteAAjouter = true;
-            contrainte += "constraint (objets_p["+index+"]!="+ indexObjet;
-          }else{
-            contrainte += " /\\ objets_p["+index+"]!="+indexObjet;
-          }
-        });
-        if(contrainteAAjouter) {
-          contrainte += ");\n";
-          console.log(contrainte);
-          this.puzzle.addString(contrainte);
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.listContraintes.push(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+      contrainte = "";
+      contrainteAAjouter = false;
+      p.non_lieu.forEach((l, index2) => {
+        var indexLieu = this.places.findIndex(pl => pl.name == l);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (lieux_p[" + index + "]!=" + indexLieu;
+        } else {
+          contrainte += " /\\ lieux_p[" + index + "]!=" + indexLieu;
         }
-     });
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.listContraintes.push(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+      contrainte = "";
+      contrainteAAjouter = false;
+      p.non_object.forEach((o, index2) => {
+        var indexObjet = this.objects.findIndex(obj => obj.name == o);
+        if (index2 == 0) {
+          contrainteAAjouter = true;
+          contrainte += "constraint (objets_p[" + index + "]!=" + indexObjet;
+        } else {
+          contrainte += " /\\ objets_p[" + index + "]!=" + indexObjet;
+        }
+      });
+      if (contrainteAAjouter) {
+        contrainte += ");\n";
+        console.log(contrainte);
+        this.listContraintes.push(contrainte);
+        this.puzzle.addString(contrainte);
+      }
+    });
 
 
-
-
-    this.objects.forEach((obj,index) => {
+    this.objects.forEach((obj, index) => {
       var contrainte = "";
       var contrainteAAjouter = false;
       obj.lieu.forEach((l, index2) => {
         var indexLieu = this.places.findIndex(pl => pl.name == l);
         if (index2 == 0) {
           contrainteAAjouter = true;
-          contrainte += "constraint (Lieux_o[" + index + "]==" + indexLieu;
+          contrainte += "constraint (lieux_o[" + index + "]==" + indexLieu;
         } else {
-          contrainte += " \\/ Lieux_o[" + index + "]==" + indexLieu;
+          contrainte += " \\/ lieux_o[" + index + "]==" + indexLieu;
         }
       });
       if (contrainteAAjouter) {
         contrainte += ");\n";
         console.log(contrainte);
+        this.listContraintes.push(contrainte);
         this.puzzle.addString(contrainte);
       }
       contrainte = "";
@@ -235,20 +257,48 @@ export class CreatePuzzleComponent {
         var indexLieu = this.places.findIndex(pl => pl.name == l);
         if (index2 == 0) {
           contrainteAAjouter = true;
-          contrainte += "constraint (Lieux_o[" + index + "]!=" + indexLieu;
+          contrainte += "constraint (lieux_o[" + index + "]!=" + indexLieu;
         } else {
-          contrainte += " /\\ Lieux_o[" + index + "]!=" + indexLieu;
+          contrainte += " /\\ lieux_o[" + index + "]!=" + indexLieu;
         }
       });
       if (contrainteAAjouter) {
         contrainte += ");\n";
         console.log(contrainte);
+        this.listContraintes.push(contrainte);
         this.puzzle.addString(contrainte);
       }
     });
 
     this.solution = this.puzzle.solveModel();
+    setTimeout(() => {
+      if (this.solution["__zone_symbol__value"]) {
+        var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
+        strSol.forEach((personne: string, index2: number) => {
+          var affectation = personne.split(":");
+          affectation.forEach((val: any, index: number) => {
+            if (val != '') {
+              if (index == 0) {
+                this.objectif[index2].personne = this.peoples[parseInt(val)].name;
+              } else if (index == 1) {
+                this.objectif[index2].object = this.objects[parseInt(val)].name;
+              } else if (index == 2) {
+                this.objectif[index2].place = this.places[parseInt(val)].name;
+              }
+            }
+          })
+        })
+        this.objectif.forEach((obj,index)=>{
+          this.current[index].personne=obj.personne;
+        });
+        console.log("Solution",this.objectif);
+      };
+    }, 5000);
+
   }
+
+
+/**************************************************************************  grille du puzzle **************************************************************************/
   cellClicked(name: string, pc: string) {
     if(this.propagates[name + pc] == false || this.propagates[name + pc] == undefined) {
       if (this.clickedOnce[name + pc] == undefined && this.clickedTwice[name + pc] == undefined && this.annule[name + pc] == undefined) {
@@ -304,18 +354,66 @@ export class CreatePuzzleComponent {
     this.clickedOnce[name + pc] = true;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = false;
+
   }
 
   cellClickedTwice(name: string, pc: string) {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = true;
     this.annule[name + pc] = false;
+    this.current.forEach((c)=>{
+      if(c.personne == name){
+        if(this.objects.some((obj)=> obj.name == pc)){
+          c.object = pc;
+        }else if(this.places.some((pl)=> pl.name == pc)){
+          c.place = pc;
+        }
+      }
+    });
+    console.log("Solution courrente",this.current);
+    if(this.isComplet()){
+      var puzzleTest = new PuzzleCreate();
+      puzzleTest.setPuzzleContent(this.puzzle.getPuzzleContent());
+      this.listContraintes.forEach((c)=> puzzleTest.addString(c));
+      this.current.forEach((c,index)=>{
+        var constraint= "constraint objets_p["+index+"]=="+this.objects.findIndex(o => o.name == c.object)+";\n";
+        constraint += "constraint lieux_p["+index+"]=="+this.places.findIndex(p => p.name == c.place)+";\n";
+        puzzleTest.addString(constraint)
+      });
+      var solutionTest : any = puzzleTest.solveModel();
+      setTimeout(() => {
+        //if(JSON.stringify(this.current) === JSON.stringify(this.objectif)){
+        console.log("res",solutionTest);
+        if(solutionTest["__zone_symbol__value"].status == "ALL_SOLUTIONS"){
+          this.showModalSuccess = true;
+        }
+      }, 5000);
+    }
   }
 
+  isComplet(): boolean {
+    let complet = true;
+    for (let element of this.current) {
+      if (element.personne === '' || element.object === '' || element.place === '') {
+        complet = false;
+        break;
+      }
+    }
+    return complet;
+  }
   cellAnnule(name: string, pc: string) {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = true;
+    this.current.forEach((c)=>{
+      if(c.personne == name){
+        if(this.objects.some((obj)=> obj.name == pc)){
+          c.object = '';
+        }else if(this.places.some((pl)=> pl.name == pc)){
+          c.place = '';
+        }
+      }
+    });
   }
 
   cellPropagate(name: string, pc: string) {
@@ -338,6 +436,32 @@ export class CreatePuzzleComponent {
       }
     }
   }
+  /*
+  checkAnswer(){
+    if(this.solution["__zone_symbol__state"]) {
+      var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
+      var line="";
+      strSol.forEach((personne:string) => {
+        var affectation = personne.split(":");
+        affectation.forEach((val:any, index:number) => {
+          if(val != '') {
+            if (index == 0) {
+              line += this.peoples[parseInt(val)].name;
+            } else if (index == 1) {
+              line += ":" + this.objects[parseInt(val)].name;
+            } else if (index == 2) {
+              line += ":" + this.places[parseInt(val)].name + "\n";
+            }
+          }
+        })
+      })
+      console.log(line);
+    } else {
+      console.log("solving ...");
+    }
+    */
+
+
   protected readonly Object = Object;
 }
 

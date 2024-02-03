@@ -160,7 +160,7 @@ export class PuzzleComputerComponent {
   }
 
   testSuccess() {
-    // this.showModalSuccess = true;
+     this.showModalSuccess = true;
   }
 
 }

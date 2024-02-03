@@ -10,10 +10,11 @@ export class PuzzleCreate extends Puzzle {
 
     "array[PERSONNE] of var OBJET : objets_p;\n"+
     "array[PERSONNE] of var LIEUX : lieux_p;\n"+
-    "array[OBJET] of var LIEUX : Lieux_o;\n"+
+    "array[OBJET] of var LIEUX : lieux_o;\n"+
 
-    "constraint alldifferent(objets_p) /\\ alldifferent(lieux_p) /\\ alldifferent(Lieux_o);\n"+
+    "constraint alldifferent(objets_p) /\\ alldifferent(lieux_p) /\\ alldifferent(lieux_o);\n"+
 
+    "constraint forall(p in PERSONNE, o in OBJET) ((lieux_p[p] = lieux_o[o]) -> (objets_p[p] = o));\n"+
 
     "solve satisfy;\n"+
 
@@ -22,5 +23,13 @@ export class PuzzleCreate extends Puzzle {
 
   constructor() {
     super(PuzzleCreate.puzzleName, PuzzleCreate.puzzleContent);
+  }
+
+  getPuzzleContent(){
+    return PuzzleCreate.puzzleContent;
+  }
+
+  setPuzzleContent(content : string){
+    PuzzleCreate.puzzleContent=content;
   }
 }

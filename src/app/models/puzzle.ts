@@ -23,7 +23,6 @@ export class Puzzle {
     });
     solve.then(result => {
       console.log("Solved !");
-      console.log(result);
     });
     return solve;
   }

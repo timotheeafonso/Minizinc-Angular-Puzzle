@@ -247,6 +247,17 @@ export class PuzzleComputerComponent {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = true;
+    this.current.forEach((c)=>{
+      if(c.monitor == name){
+        if(this.price.some((obj)=> obj == pc)){
+          c.price = '';
+        }else if(this.disk.some((obj)=> obj == pc)){
+          c.disk = '';
+        }else if(this.processor.some((obj)=> obj == pc)){
+          c.processor = '';
+        }
+      }
+    });
   }
 
   cellPropagate(name: string, pc: string) {

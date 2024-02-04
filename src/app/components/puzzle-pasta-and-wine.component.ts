@@ -296,6 +296,24 @@ export class PuzzlePastaAndWineComponent {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = true;
+
+    this.current.forEach((c)=>{
+      if(c.women == name){
+        if(this.ages.some((obj)=> obj == pc)){
+          c.age = '';
+        }else if(this.names.some((obj)=> obj == pc)){
+          c.name = '';
+        }else if(this.pastas.some((obj)=> obj == pc)){
+          c.pasta = '';
+        }else if(this.wines.some((obj)=> obj == pc)){
+          c.wine = '';
+        }else if(this.shirts.some((obj)=> obj == pc)){
+          c.shirt  = '';
+        }else if(this.surnames.some((obj)=> obj == pc)){
+          c.surname  = '';
+        }
+      }
+    });
   }
 
   cellPropagate(name: string, pc: string) {

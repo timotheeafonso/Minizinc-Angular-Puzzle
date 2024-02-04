@@ -257,6 +257,17 @@ export class PuzzleMoviesComponent {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = false;
     this.annule[name + pc] = true;
+    this.current.forEach((c)=>{
+      if(c.name == name){
+        if(this.days.some((obj)=> obj == pc)){
+          c.day = '';
+        }else if(this.films.some((obj)=> obj == pc)){
+          c.film = '';
+        }else if(this.times.some((obj)=> obj == pc)){
+          c.time = '';
+        }
+      }
+    });
   }
 
   cellPropagate(name: string, pc: string) {

@@ -85,8 +85,8 @@ table {
   height:35px;
 }
 .form-style-5 .number {
-  background: var(--bright-blue);
-  color: #fff;
+  color: var(--bright-blue);
+  background-color: color-mix(in srgb, var(--bright-blue) 15%, transparent);
   height: 30px;
   width: 30px;
   display: inline-block;
@@ -94,7 +94,7 @@ table {
   margin-right: 4px;
   line-height: 30px;
   text-align: center;
-  border-radius: 15px 15px 15px 0px;
+  border-radius: 2.75rem;
 }
 
 .form-style-5 input[type="submit"],

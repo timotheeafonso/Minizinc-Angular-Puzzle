@@ -23,12 +23,12 @@ export class PuzzleMoviesComponent {
   annule: { [key: string]: boolean } = {};
   propagates: { [key: string]: boolean } = {};
   nb_propagates: { [key: string]: number } = {};
-  start : boolean = false;
+  start: boolean = false;
   films = ['88 minutes', 'Donnie Brasco', 'Scarecrow', 'Scarface', 'The Recruit'];
   days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   times = ['7:35 pm', '7:40 pm', '8:20 pm', '8:30 pm', '8:45 pm'];
   people = ['Jessica', 'Laurie', 'Mark', 'Mary', 'Sally'];
-  evidences= [
+  evidences = [
     'Of the 20-hundreds releases, neither of which was Jessica\'s choice, one opened the week and one closed the week.',
     'The latest of the 19-hundreds releases was shown at 30 minutes past the hour.',
     'The releases shown before 8:00 pm were on consecutive days, as were the releases shown after 8:00 pm.',
@@ -40,27 +40,27 @@ export class PuzzleMoviesComponent {
   @ViewChild(ModalSuccessComponent) modalSuccess: any;
   showModalSuccess = false;
   showModalNotSucess = false;
-  current: { name: string, film: string, day: string,time: string}[] = [
-    { name: 'Jessica', film: '', day: '',time:''},
-    { name: 'Laurie', film: '', day: '',time:''},
-    { name: 'Mark', film: '', day: '',time:''},
-    { name: 'Mary', film: '', day: '',time:''},
-    { name: 'Sally', film: '', day: '',time:''}
+  current: { name: string, film: string, day: string, time: string }[] = [
+    {name: 'Jessica', film: '', day: '', time: ''},
+    {name: 'Laurie', film: '', day: '', time: ''},
+    {name: 'Mark', film: '', day: '', time: ''},
+    {name: 'Mary', film: '', day: '', time: ''},
+    {name: 'Sally', film: '', day: '', time: ''}
   ];
 
-  objectif: { name: string, film: string, day: string,time: string}[] = [
-    { name: '', film: '', day: '',time:''},
-    { name: '', film: '', day: '',time:''},
-    { name: '', film: '', day: '',time:''},
-    { name: '', film: '', day: '',time:''},
-    { name: '', film: '', day: '',time:''}
+  objectif: { name: string, film: string, day: string, time: string }[] = [
+    {name: '', film: '', day: '', time: ''},
+    {name: '', film: '', day: '', time: ''},
+    {name: '', film: '', day: '', time: ''},
+    {name: '', film: '', day: '', time: ''},
+    {name: '', film: '', day: '', time: ''}
   ];
 
   constructor() {
     this.puzzle = new PuzzleMovies();
     this.solution = this.puzzle.solveModel();
 
-    setTimeout(() => {
+    this.solution.then(() => {
       console.log(this.solution);
       if (this.solution["__zone_symbol__value"].status == "ALL_SOLUTIONS") {
         var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
@@ -69,11 +69,11 @@ export class PuzzleMoviesComponent {
           affectation.forEach((val: any, index: number) => {
             if (val != '') {
               if (index == 0) {
-                if(val == 'Minutes'){
+                if (val == 'Minutes') {
                   val = '88 minutes';
-                }else if(val=='Donnie_Brasco'){
-                  val ='Donnie Brasco';
-                }else if(val=='The_recruit'){
+                } else if (val == 'Donnie_Brasco') {
+                  val = 'Donnie Brasco';
+                } else if (val == 'The_recruit') {
                   val = 'The Recruit';
                 }
                 this.objectif[index2].film = val;
@@ -81,16 +81,16 @@ export class PuzzleMoviesComponent {
                 this.objectif[index2].name = val;
               } else if (index == 2) {
                 this.objectif[index2].day = val;
-              }else if (index == 3) {
-                if(val == '35'){
+              } else if (index == 3) {
+                if (val == '35') {
                   val = '7:35 pm';
-                }else if(val=='40'){
+                } else if (val == '40') {
                   val = '7:40 pm';
-                }else if(val=='80'){
+                } else if (val == '80') {
                   val = '8:20 pm';
-                }else if(val=='90'){
+                } else if (val == '90') {
                   val = '8:30 pm';
-                }else if(val=='105'){
+                } else if (val == '105') {
                   val = '8:45 pm';
                 }
                 this.objectif[index2].time = val;
@@ -101,7 +101,7 @@ export class PuzzleMoviesComponent {
       }
       this.start = true;
       console.log(this.objectif);
-    }, 10000);
+    });
 
   }
 
@@ -212,35 +212,36 @@ export class PuzzleMoviesComponent {
     this.clickedTwice[name + pc] = true;
     this.annule[name + pc] = false;
 
-    this.current.forEach((c)=>{
-      if(c.name == name){
-        if(this.films.some((f)=> f == pc)){
+    this.current.forEach((c) => {
+      if (c.name == name) {
+        if (this.films.some((f) => f == pc)) {
           c.film = pc;
-        }else if(this.days.some((d)=> d == pc)){
+        } else if (this.days.some((d) => d == pc)) {
           c.day = pc;
-        }else if(this.times.some((t)=> t == pc)){
+        } else if (this.times.some((t) => t == pc)) {
           c.time = pc;
         }
       }
     });
-    console.log("Solution courrente",this.current);
-    if(this.isComplet()){
-      var currentCopy :{ name: string, film: string, day: string,time: string}[] = [];
-      this.objectif.forEach((obj,index)=>{
-        var pcoreder = this.current.find((cur,index2)=> cur.name == obj.name )
-        if(pcoreder) {
+    console.log("Solution courrente", this.current);
+    if (this.isComplet()) {
+      var currentCopy: { name: string, film: string, day: string, time: string }[] = [];
+      this.objectif.forEach((obj, index) => {
+        var pcoreder = this.current.find((cur, index2) => cur.name == obj.name)
+        if (pcoreder) {
           currentCopy.push(pcoreder);
         }
       })
       console.log(currentCopy);
-      if(JSON.stringify(currentCopy) === JSON.stringify(this.objectif)){
+      if (JSON.stringify(currentCopy) === JSON.stringify(this.objectif)) {
         this.showModalSuccess = true;
-      }else{
+      } else {
         this.showModalNotSucess = true;
       }
 
     }
   }
+
   isComplet(): boolean {
     let complet = true;
     for (let element of this.current) {
@@ -251,6 +252,7 @@ export class PuzzleMoviesComponent {
     }
     return complet;
   }
+
   cellAnnule(name: string, pc: string) {
     this.clickedOnce[name + pc] = false;
     this.clickedTwice[name + pc] = false;

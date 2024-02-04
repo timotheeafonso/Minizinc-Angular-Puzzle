@@ -1,7 +1,9 @@
 <!-- movies-puzzle.component.html -->
 <div class="content">
-
-  <table>
+  <div *ngIf="start==false">
+    <p>Loading ...</p>
+  </div>
+  <table *ngIf="start">
     <tbody>
 
     <tr>
@@ -248,10 +250,10 @@
 
 </div>
 
-<app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Puzzle Moovie" content="Incorrect !">  </app-modal-success>
+<app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Puzzle Filmz" content="Incorrect !">  </app-modal-success>
 
 
-<app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Moovie" content="Bravo !! Vous avez trouvé la solution au Moovie !">
+<app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Filmz" content="Bravo !! Vous avez trouvé la solution au Filmz !">
 </app-modal-success>
 
 <div></div>

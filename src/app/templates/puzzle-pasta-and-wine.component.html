@@ -1,13 +1,17 @@
 <!-- movies-puzzle.component.html -->
 <div class="content">
 
+  <div *ngIf="start==false">
+    <p>Loading ...</p>
+  </div>
+
   <ul>
     <li *ngFor="let evidence of this.evidences;" #parameter
         (click)="putLineThrough(parameter)"> {{ evidence }}
     </li>
   </ul>
 
-  <table>
+  <table *ngIf="start">
     <tbody>
 
     <tr>
@@ -149,7 +153,7 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let women of womens">
+          <tr *ngFor="let women of women">
             <td class="js-item horizontal-text-item">{{ women }}</td>
           </tr>
           </tbody>
@@ -159,12 +163,12 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell"
                 *ngFor="let col of shirts"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -176,12 +180,12 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell" *ngFor="let col of names"
                 [attr.data-x]="col"
                 [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
 
@@ -193,11 +197,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell" *ngFor="let col of surnames"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -208,11 +212,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell" *ngFor="let col of pastas"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -223,11 +227,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell" *ngFor="let col of wines"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -238,11 +242,11 @@
       <td>
         <table class="">
           <tbody>
-          <tr *ngFor="let row of womens">
+          <tr *ngFor="let row of women">
             <td class="cell" *ngFor="let col of ages"
                 [attr.data-x]="col" [attr.data-y]="row"
                 (click)="cellClicked(row, col)"
-                [ngClass]="{'clicked': clickedOnce[row + col], 'double-clicked': clickedTwice[row + col]}">
+                [ngClass]="{'clicked': clickedOnce[row + col],'clicked-twice': clickedTwice[row + col],'annule' : annule[row + col],'propagate' : propagates[row + col]}">
               <span>&nbsp;</span>
             </td>
           </tr>
@@ -255,8 +259,10 @@
     </tbody>
   </table>
 
-</div>
+  <app-modal-success *ngIf="this.showModalNotSucess" (closeModal)="this.showModalNotSucess = false" header="Puzzle Pazta & Winez" content="Incorrect !">  </app-modal-success>
 
-<div>
+
+  <app-modal-success *ngIf="this.showModalSuccess" (closeModal)="this.showModalSuccess = false" header="Puzzle Pazta & Winez" content="Bravo !! Vous avez trouvé la solution au Pazta & Winez !">
+  </app-modal-success>
 
 </div>

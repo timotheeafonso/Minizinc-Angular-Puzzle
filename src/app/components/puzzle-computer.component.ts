@@ -20,7 +20,7 @@ import {PuzzleCreate} from "../models/puzzle-create";
 export class PuzzleComputerComponent {
   public solution: any;
   private puzzle: any;
-  start : boolean = false;
+  start: boolean = false;
   clickedOnce: { [key: string]: boolean } = {};
   clickedTwice: { [key: string]: boolean } = {};
   annule: { [key: string]: boolean } = {};
@@ -37,20 +37,20 @@ export class PuzzleComputerComponent {
   @ViewChild(ModalSuccessComponent) modalSuccess: any;
   showModalSuccess = false;
   showModalNotSucess = false;
-  current: { monitor: string, processor: string, disk: string,price: string}[] = [
-    { monitor: '13\'', processor: '', disk: '',price:''},
-    { monitor: '15\'', processor: '', disk: '',price:''},
-    { monitor: '15.6\'', processor: '', disk: '',price:''},
-    { monitor: '21.5\'', processor: '', disk: '',price:''},
-    { monitor: '27\'', processor: '', disk: '',price:''}
+  current: { monitor: string, processor: string, disk: string, price: string }[] = [
+    {monitor: '13\'', processor: '', disk: '', price: ''},
+    {monitor: '15\'', processor: '', disk: '', price: ''},
+    {monitor: '15.6\'', processor: '', disk: '', price: ''},
+    {monitor: '21.5\'', processor: '', disk: '', price: ''},
+    {monitor: '27\'', processor: '', disk: '', price: ''}
   ];
 
-  objectif: { monitor: string, processor: string, disk: string,price: string}[] = [
-    { monitor: '13\'', processor: '', disk: '',price:''},
-    { monitor: '15\'', processor: '', disk: '',price:''},
-    { monitor: '15.6\'', processor: '', disk: '',price:''},
-    { monitor: '21.5\'', processor: '', disk: '',price:''},
-    { monitor: '27\'', processor: '', disk: '',price:''}
+  objectif: { monitor: string, processor: string, disk: string, price: string }[] = [
+    {monitor: '13\'', processor: '', disk: '', price: ''},
+    {monitor: '15\'', processor: '', disk: '', price: ''},
+    {monitor: '15.6\'', processor: '', disk: '', price: ''},
+    {monitor: '21.5\'', processor: '', disk: '', price: ''},
+    {monitor: '27\'', processor: '', disk: '', price: ''}
   ];
 
 
@@ -58,9 +58,8 @@ export class PuzzleComputerComponent {
     this.puzzle = new PuzzleComputer();
     this.solution = this.puzzle.solveModel();
 
-
-    setTimeout(() => {
-      console.log(this.solution);
+    // console.log(this.solution);
+    this.solution.then(() => {
       if (this.solution["__zone_symbol__value"].status == "ALL_SOLUTIONS") {
         var strSol = this.solution["__zone_symbol__value"].solution.output.default.split("\n");
         strSol.forEach((monitor: string, index2: number) => {
@@ -68,15 +67,15 @@ export class PuzzleComputerComponent {
           affectation.forEach((val: any, index: number) => {
             if (val != '') {
               if (index == 2) {
-                if(val == '20'){
+                if (val == '20') {
                   val = '2.0 MHz';
-                }else if(val=='23'){
-                  val ='2.3 MHz';
-                }else if(val=='25'){
+                } else if (val == '23') {
+                  val = '2.3 MHz';
+                } else if (val == '25') {
                   val = '2.5 MHz';
-                }else if(val=='27'){
+                } else if (val == '27') {
                   val = '2.7 MHz';
-                }else if(val=='31'){
+                } else if (val == '31') {
                   val = '3.1 MHz';
                 }
                 this.objectif[index2].processor = val;
@@ -84,15 +83,15 @@ export class PuzzleComputerComponent {
                 val += ' Gb'
                 this.objectif[index2].disk = val;
               } else if (index == 4) {
-                if(val == '699'){
+                if (val == '699') {
                   val = '$ 699,00';
-                }else if(val=='999'){
-                  val ='$ 999,00';
-                }else if(val=='1149'){
+                } else if (val == '999') {
+                  val = '$ 999,00';
+                } else if (val == '1149') {
                   val = '$ 1.149,00';
-                }else if(val=='1349'){
+                } else if (val == '1349') {
                   val = '$ 1.349,00';
-                }else if(val=='1649'){
+                } else if (val == '1649') {
                   val = '$ 1.649,00';
                 }
                 this.objectif[index2].price = val;
@@ -103,7 +102,7 @@ export class PuzzleComputerComponent {
       }
       this.start = true;
       console.log(this.objectif);
-    }, 30000);
+    })
   }
 
   cellClicked(name: string, pc: string) {
@@ -213,35 +212,34 @@ export class PuzzleComputerComponent {
     this.clickedTwice[name + pc] = true;
     this.annule[name + pc] = false;
 
-    this.current.forEach((c)=>{
-      if(c.monitor == name){
-        if(this.processor.some((proc)=> proc == pc)){
+    this.current.forEach((c) => {
+      if (c.monitor == name) {
+        if (this.processor.some((proc) => proc == pc)) {
           c.processor = pc;
-        }else if(this.disk.some((d)=> d == pc)){
+        } else if (this.disk.some((d) => d == pc)) {
           c.disk = pc;
-        }else if(this.price.some((pr)=> pr == pc)){
+        } else if (this.price.some((pr) => pr == pc)) {
           c.price = pc;
         }
       }
     });
-    console.log("Solution courrente",this.current);
-    if(this.isComplet()){
-      var currentCopy :{ monitor: string, processor: string, disk: string,price: string}[] = [];
-      this.objectif.forEach((obj,index)=>{
-          var pcoreder = this.current.find((cur,index2)=> cur.monitor == obj.monitor )
-          if(pcoreder) {
-            currentCopy.push(pcoreder);
-          }
+    console.log("Solution courrente", this.current);
+    if (this.isComplet()) {
+      var currentCopy: { monitor: string, processor: string, disk: string, price: string }[] = [];
+      this.objectif.forEach((obj, index) => {
+        var pcoreder = this.current.find((cur, index2) => cur.monitor == obj.monitor)
+        if (pcoreder) {
+          currentCopy.push(pcoreder);
+        }
       })
       console.log(currentCopy);
-      if(JSON.stringify(currentCopy) === JSON.stringify(this.objectif)){
+      if (JSON.stringify(currentCopy) === JSON.stringify(this.objectif)) {
         this.showModalSuccess = true;
-      }else{
+      } else {
         this.showModalNotSucess = true;
       }
 
     }
-
 
   }
 
@@ -279,44 +277,6 @@ export class PuzzleComputerComponent {
     } else {
       element.classList.add('lineThrough')
     }
-  }
-
-  testSuccess() {
-    let splited = this.solution["__zone_symbol__value"].solution.output.default.split("\n")
-    let res: { [key: string]: string[] } = {};
-    splited.forEach(function (line: string) {
-      if (line != "") {
-        let id = "";
-        line.split(":").forEach(function (val, index) {
-          if (index == 0) {
-            id = val;
-            res[id] = [];
-          } else {
-            res[id].push(val)
-          }
-        });
-      }
-    });
-    console.log(this.clickedTwice)
-    console.log(res);
-    let green = this.clickedTwice
-    for (let resKey in res) {
-      res[resKey].forEach(function (val1) {
-        res[resKey].forEach(function (val2) {
-          if(val1 != val2) {
-            for (let greenKey in green) {
-              if(green[val1 + val2] !== undefined || green[val2 + val1] !== undefined) {
-
-              }
-            }
-          }
-        });
-      });
-    }
-    // for(this.solution.output.default){
-    //
-    // }
-    // this.showModalSuccess = true;
   }
 
   isComplet(): boolean {
